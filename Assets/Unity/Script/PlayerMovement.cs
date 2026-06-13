@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravityMultiplier = 2f;
 
     [Header("Advanced Crouch Settings")]
-    public Transform cameraRoot;          // ÇáÕäÏæÞ ÇáÌÏíÏ Çááí ÈäÍØ Ýíå "ÇáÑÃÓ"
+    public Transform cameraRoot;          
     public float standingHeight = 2f;
     public float crouchHeight = 1f;
     public Vector3 standingCenter = new Vector3(0, 1f, 0);
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputValue value) => moveInput = value.Get<Vector2>();
     public void OnJump(InputValue value) => isJumpPressed = value.isPressed;
 
-    // Êã ÊÕÍíÍ ÏÇáÉ ÇáÑßÖ áÊÚãá ÈäÙÇã ÇáÊÈÏíá (ÖÛØÉ æÇÍÏÉ ááÊÔÛíá æÖÛØÉ ááÅíÞÇÝ)
+    
     public void OnSprint(InputValue value)
     {
         if (value.isPressed)
@@ -82,17 +82,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleStamina()
     {
-        // Êã ÊÚÑíÝ ÇáãÊÛíÑÇÊ ÇáÕÍíÍÉ áãÑÇÞÈÉ ÇáÍÑßÉ ÇáßáíÉ æÇáÊÞÏã ááÃãÇã
+        
         bool isMoving = moveInput.magnitude > 0;
         bool isMovingForward = moveInput.y > 0;
 
-        // ÅÐÇ ÃæÞÝ ÇááÇÚÈ ÍÑßÊå¡ íÊã ÅáÛÇÁ ÇáÑßÖ ÊáÞÇÆíÇð
+       
         if (!isMoving)
         {
             isSprintPressed = false;
         }
 
-        // íÓÊåáß ÇáØÇÞÉ ÝÞØ ÅÐÇ ßÇä ãÊÌåÇð ááÃãÇã ÍÕÑÇð
+        
         if (isSprintPressed && isMovingForward && !isExhausted && !isCrouching)
         {
             currentStamina -= staminaDrainRate * Time.deltaTime;
@@ -118,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CalculateLocalMovement()
     {
-        // Êã ÇáÊÃßíÏ Úáì Ãä ÇáÑßÖ ÇáÝÚáí áÇ íÍÏË ÅáÇ ÚäÏ ÇáÖÛØ ááÃãÇã (moveInput.y > 0)
+        
         bool isRunning = isSprintPressed && !isExhausted && !isCrouching && moveInput.y > 0;
 
         float currentSpeed = walkSpeed;
