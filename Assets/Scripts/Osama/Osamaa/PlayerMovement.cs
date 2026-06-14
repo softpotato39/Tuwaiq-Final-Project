@@ -40,6 +40,12 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         currentStamina = maxStamina;
+
+        // ÅÌÈÇÑ ÇáÑÃÓ Úáì ÇáÊãÑßÒ İí ÇáãæŞÚ ÇáÕÍíÍ (0.95) Ãæá ãÇ ÊÔÊÛá ÇááÚÈÉ
+        if (cameraRoot != null)
+        {
+            cameraRoot.localPosition = new Vector3(0f, cameraStandingY, 0f);
+        }
     }
 
     private void Update()
