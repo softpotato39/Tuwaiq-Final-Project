@@ -3,12 +3,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement Speeds")]
+    
     public float walkSpeed = 5f;
     public float sprintSpeed = 8f;
     public float crouchSpeed = 2.5f;
 
-    [Header("Skyrim Stamina System")]
+    
     public float maxStamina = 100f;
     public float currentStamina;
     public float staminaDrainRate = 20f;
@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 2f;
     public float gravityMultiplier = 2f;
 
-    [Header("Advanced Crouch Settings")]
+    
     public Transform cameraRoot;          
     public float standingHeight = 2f;
     public float crouchHeight = 1f;
@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         currentStamina = maxStamina;
 
-        // ≈Ã»«— «·—√” ⁄·Ï «· „—ﬂ“ ›Ì «·„Êﬁ⁄ «·’ÕÌÕ (0.95) √Ê· „«  ‘ €· «··⁄»…
+        
         if (cameraRoot != null)
         {
             cameraRoot.localPosition = new Vector3(0f, cameraStandingY, 0f);
