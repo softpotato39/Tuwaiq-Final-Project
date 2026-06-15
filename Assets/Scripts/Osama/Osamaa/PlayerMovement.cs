@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    
+    [Header("Movement Speeds")]
     public float walkSpeed = 5f;
     public float sprintSpeed = 8f;
     public float crouchSpeed = 2.5f;
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
     private Vector3 finalVelocity;
 
-    private bool isJumpPressed;
+    private bool isJumpPressed; 
     private bool isCrouching;
     private bool isSprintPressed;
 
@@ -46,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
         {
             cameraRoot.localPosition = new Vector3(0f, cameraStandingY, 0f);
         }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
