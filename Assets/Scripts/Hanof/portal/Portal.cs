@@ -182,16 +182,46 @@ public class Portal : MonoBehaviour {
         }
         ProtectScreenFromClipping (playerCam.transform.position);
     }
-    void CreateViewTexture () {
-        if (viewTexture == null || viewTexture.width != Screen.width || viewTexture.height != Screen.height) {
-            if (viewTexture != null) {
-                viewTexture.Release ();
+
+    //old texture rendered, bad in URP lol :,) Also the new method has a work around for the portal shader
+    //void CreateViewTexture () {
+    //    if (viewTexture == null || viewTexture.width != Screen.width || viewTexture.height != Screen.height) {
+    //        if (viewTexture != null) {
+    //            viewTexture.Release ();
+    //        }
+    //        viewTexture = new RenderTexture (Screen.width, Screen.height, 24); //was 0, now me and claude fix :)
+    //        // Render the view from the portal camera to the view texture
+    //        portalCam.targetTexture = viewTexture;
+    //        // Display the view texture on the screen of the linked portal
+    //        linkedPortal.screen.material.SetTexture ("_MainTex", viewTexture);
+    //    }
+    //}
+
+    //----------------------------------------------
+    void CreateViewTexture()
+    {
+        if (viewTexture == null || viewTexture.width != Screen.width || viewTexture.height != Screen.height)
+        {
+            if (viewTexture != null)
+            {
+                viewTexture.Release();
             }
-            viewTexture = new RenderTexture (Screen.width, Screen.height, 24); //was 0, now me and claude fix :)
-            // Render the view from the portal camera to the view texture
+
+            // Create a modern URP RenderTextureDescriptor
+            RenderTextureDescriptor desc = new RenderTextureDescriptor(Screen.width, Screen.height, RenderTextureFormat.Default, 24);
+
+            // CRITICAL: Force the texture to bypass gamma compression and sample raw Linear data
+            desc.sRGB = false;
+
+            // Match the default color format of your project's Universal Render Pipeline
+            desc.colorFormat = RenderTextureFormat.DefaultHDR;
+
+            // Instantiate and assign
+            viewTexture = new RenderTexture(desc);
             portalCam.targetTexture = viewTexture;
+
             // Display the view texture on the screen of the linked portal
-            linkedPortal.screen.material.SetTexture ("_MainTex", viewTexture);
+            linkedPortal.screen.material.SetTexture("_MainTex", viewTexture);
         }
     }
 
