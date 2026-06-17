@@ -9,10 +9,9 @@ public class PlayerInteraction : MonoBehaviour
     [Header("Hands Holder Reference")]
     public Transform handsHolder;
 
-    [Header("Item Placement Offset (Ê“‰Ì… „ﬂ«‰ «·ﬂ‘«›)")]
-    public Vector3 itemLocalPosition = new Vector3(0.3f, 1.6f, 0.5f); // X=Ì„Ì‰° Y= Õ ° Z=ﬁœ«„ «·ﬂ«„Ì—«
-    public Vector3 itemLocalRotation = new Vector3(0f, 0f, 0f); // “«ÊÌ… œÊ—«‰ «·ﬂ‘«›
-
+    
+    public Vector3 itemLocalPosition = new Vector3(0.3f, 0.6f, 2f); 
+    public Vector3 itemLocalRotation = new Vector3(0f, 0f, 0f); 
     private GameObject currentHeldItem;
     private Transform mainCameraTransform;
 
@@ -28,7 +27,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (mainCameraTransform == null) return;
 
-        // «·Ìœ  ·Õﬁ «·ﬂ«„Ì—« «·√”«”Ì… »«·„·¯Ì
+      
         if (handsHolder != null)
         {
             handsHolder.position = mainCameraTransform.position;

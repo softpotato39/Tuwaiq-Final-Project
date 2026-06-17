@@ -607,7 +607,9 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 64
-  handsHolder: {fileID: 1320388090}
+  handsHolder: {fileID: 1308954035}
+  itemLocalPosition: {x: 0.3, y: 0, z: 2.04}
+  itemLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &415339062
 GameObject:
   m_ObjectHideFlags: 0
