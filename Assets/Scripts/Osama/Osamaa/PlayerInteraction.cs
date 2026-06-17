@@ -47,7 +47,7 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.G) && currentHeldItem != null)
+        if (Input.GetKeyDown(KeyCode.R) && currentHeldItem != null)
         {
             DropItem();
         }
