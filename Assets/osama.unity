@@ -131,12 +131,13 @@ GameObject:
   - component: {fileID: 1980148}
   - component: {fileID: 1980147}
   - component: {fileID: 1980146}
+  - component: {fileID: 1980150}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!64 &1980146
 MeshCollider:
@@ -232,6 +233,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1980150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 0470dd4a78f7bd34d90d8694385f87a2, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &21071575
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +556,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ch45_nonPBR
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7d5cf7ee28a540a4e9b05156c3384ede, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig1:Hips'\n\tTransform 'mixamorig1:LeftHandPinky2'\n\tTransform
+        'mixamorig1:RightHand'\n\tTransform 'mixamorig1:LeftHandMiddle2'\n\tTransform
+        'mixamorig1:RightFoot'\n\tTransform 'mixamorig1:Spine1'\n\tTransform 'mixamorig1:RightLeg'\n\tTransform
+        'mixamorig1:Hips'\n\tTransform 'mixamorig1:RightArm'\n\tTransform 'mixamorig1:LeftHandMiddle1'\n\tand
+        more ...\n\tFrom animation clip 'mixamo.com'"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -564,7 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1947e525033e09409edc5584ea79cc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FootprintSpawner
-  footprintDecalPrefab: {fileID: 560477785}
+  footprintDecalPrefab: {fileID: 3826844032254851190, guid: db9186c0d9158774c8b7b19e9a25be06, type: 3}
   leftFootBone: {fileID: 145898623}
   rightFootBone: {fileID: 145898622}
   footprintLifetime: 2
@@ -786,66 +833,6 @@ Transform:
   m_Children:
   - {fileID: 1308954035}
   m_Father: {fileID: 156211305}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &560477785
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 560477787}
-  - component: {fileID: 560477786}
-  m_Layer: 0
-  m_Name: FootprintDecal
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &560477786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 560477785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.DecalProjector
-  m_Material: {fileID: 2100000, guid: e7897d7231dc3c64ab81d91225ae35c2, type: 2}
-  m_DrawDistance: 1000
-  m_FadeScale: 0.9
-  m_StartAngleFade: 180
-  m_EndAngleFade: 180
-  m_UVScale: {x: 1, y: 1}
-  m_UVBias: {x: 0, y: 0}
-  m_RenderingLayerMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ScaleMode: 0
-  m_Offset: {x: 0, y: 0, z: 0.5}
-  m_Size: {x: 1, y: 1, z: 1}
-  m_FadeFactor: 1
-  version: 1
-  m_DecalLayerMask: 1
---- !u!4 &560477787
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 560477785}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.87985, y: 0.401, z: 0.75535}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &598124346
 GameObject:
@@ -1650,4 +1637,3 @@ SceneRoots:
   - {fileID: 1222627193}
   - {fileID: 1320388090}
   - {fileID: 145898620}
-  - {fileID: 560477787}
