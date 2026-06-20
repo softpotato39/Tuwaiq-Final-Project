@@ -16,7 +16,7 @@ MonoBehaviour:
   injectionPoint: 550
   fetchColorBuffer: 1
   requirements: 0
-  passMaterial: {fileID: 2100000, guid: f4629c6b95894dd4486b0e8fb2b5fe73, type: 2}
+  passMaterial: {fileID: 2100000, guid: 47acb85051ce44b41956a12cab4b5224, type: 2}
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AdditionalLightCountFeature
   m_Active: 1
   renderPassEvent: 500
-  material: {fileID: 2100000, guid: f4629c6b95894dd4486b0e8fb2b5fe73, type: 2}
+  material: {fileID: 2100000, guid: 47acb85051ce44b41956a12cab4b5224, type: 2}
 --- !u!114 &6031231608386464678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +143,6 @@ MonoBehaviour:
     DirectLightingStrength: 0.25
     Radius: 0.3
     Samples: 1
-    BlurQuality: 0
+    BlurQuality: 1
     Falloff: 100
     SampleCount: -1
