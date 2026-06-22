@@ -1,127 +1,204 @@
-Shader "Custom/GhostGlitch"
+Shader "Custom/GhostGlitchV2"
 {
-    // شيدر سيلويت أسود مع تأثير غلايتش (تشويش رأسي + ارتجاف/قطع لحظي + تلوين خفيف)
-    // يصمم لـ URP. يضاف على ماتيريال جديد، والماتيريال يطبق على Mesh الوحش.
+    // نسخة محسّنة من GhostGlitch الأصلي
+    // URP / HLSL - تشويش أقوى: بكسل كوراپشن + سكان لاينز + أسود مهيمن + تمزق أفقي
 
     Properties
     {
         _Color ("اللون الأساسي (أسود غالباً)", Color) = (0,0,0,1)
 
         [Header(Vertex Glitch)]
-        _GlitchAmount ("قوة تشويش الفيرتكس", Range(0, 1)) = 0.05
-        _GlitchSpeed ("سرعة تغيّر التشويش", Range(0.1, 60)) = 12
-        _GlitchChance ("احتمالية حدوث قفزة تشويش", Range(0, 1)) = 0.15
+        _GlitchAmount  ("قوة تشويش الفيرتكس",      Range(0,1))   = 0.12
+        _GlitchSpeed   ("سرعة تغيّر التشويش",       Range(0.1,60)) = 20
+        _GlitchChance  ("احتمالية قفزة التشويش",    Range(0,1))   = 0.35
 
         [Header(Flicker Cutout)]
-        _FlickerSpeed ("سرعة الارتجاف", Range(0.1, 60)) = 18
-        _FlickerChance ("احتمالية الاختفاء اللحظي", Range(0, 1)) = 0.08
+        _FlickerSpeed  ("سرعة الارتجاف",            Range(0.1,60)) = 24
+        _FlickerChance ("احتمالية الاختفاء اللحظي", Range(0,1))   = 0.18
 
         [Header(Color Glitch Tint)]
-        _TintAmount ("قوة التلوين وقت الغلايتش", Range(0, 1)) = 0.25
-        _TintColorA ("تلوين 1", Color) = (1,0,0.1,1)
-        _TintColorB ("تلوين 2", Color) = (0,0.6,1,1)
+        _TintAmount  ("قوة التلوين وقت الغلايتش",   Range(0,1))  = 0.35
+        _TintColorA  ("تلوين 1",                    Color) = (1,0,0.1,1)
+        _TintColorB  ("تلوين 2",                    Color) = (0,0.6,1,1)
+
+        [Header(Scanlines)]
+        _ScanlineIntensity ("قوة السكان لاينز",     Range(0,1))   = 0.80
+        _ScanlineCount     ("عدد الخطوط",           Range(20,600)) = 180
+        _ScanlineSpeed     ("سرعة الخطوط",          Range(0,10))   = 2.5
+
+        [Header(Pixel Block Corruption)]
+        _BlockSize      ("حجم البلوك (بكسل كوراپشن)",Range(4,64)) = 20
+        _BlockCorrupt   ("قوة انزياح البلوك",        Range(0,1))   = 0.65
+        _BlockFreq      ("تكرار الكوراپشن",          Range(0,1))   = 0.55
+
+        [Header(Horizontal Tear)]
+        _TearIntensity  ("قوة التمزق الأفقي",       Range(0,1))   = 0.55
+        _TearCount      ("عدد مناطق التمزق",        Range(1,30))   = 12
+
+        [Header(Black Dominance)]
+        _BlackDominance ("هيمنة الأسود",            Range(0,1))   = 0.80
+        _BlackThreshold ("حد الظلام",               Range(0,1))   = 0.45
 
         [Header(Master Control)]
-        _GlitchIntensity ("شدة الغلايتش الكلية (يتحكم بيها سكربت)", Range(0, 1)) = 0.3
+        _GlitchIntensity ("شدة الغلايتش الكلية (سكربت)", Range(0,1)) = 0.5
     }
 
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "Queue" = "Geometry" }
+        Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" "Queue"="Geometry" }
         Cull Back
 
         Pass
         {
             Name "ForwardLit"
-            Tags { "LightMode" = "UniversalForward" }
+            Tags { "LightMode"="UniversalForward" }
 
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
+            // ─────────────────────────── Structs ───────────────────────────
             struct Attributes
             {
                 float4 positionOS : POSITION;
                 float3 normalOS   : NORMAL;
+                float2 uv         : TEXCOORD0;
             };
 
             struct Varyings
             {
                 float4 positionHCS : SV_POSITION;
                 float3 positionWS  : TEXCOORD0;
-                float  glitchSeed  : TEXCOORD1;
+                float2 uv          : TEXCOORD1;
+                float  glitchSeed  : TEXCOORD2;
             };
 
+            // ──────────────────────── CBuffer ─────────────────────────────
             CBUFFER_START(UnityPerMaterial)
                 float4 _Color;
-                float _GlitchAmount;
-                float _GlitchSpeed;
-                float _GlitchChance;
-                float _FlickerSpeed;
-                float _FlickerChance;
-                float _TintAmount;
+                float  _GlitchAmount;
+                float  _GlitchSpeed;
+                float  _GlitchChance;
+                float  _FlickerSpeed;
+                float  _FlickerChance;
+                float  _TintAmount;
                 float4 _TintColorA;
                 float4 _TintColorB;
-                float _GlitchIntensity;
+                float  _ScanlineIntensity;
+                float  _ScanlineCount;
+                float  _ScanlineSpeed;
+                float  _BlockSize;
+                float  _BlockCorrupt;
+                float  _BlockFreq;
+                float  _TearIntensity;
+                float  _TearCount;
+                float  _BlackDominance;
+                float  _BlackThreshold;
+                float  _GlitchIntensity;
             CBUFFER_END
 
-            // هاش بسيط (0..1) من قيمة float، يستخدم بدل Random حقيقي
+            // ──────────────────────── Hash Utils ──────────────────────────
             float Hash1(float n)
             {
                 return frac(sin(n) * 43758.5453123);
             }
 
+            float Hash2(float2 p)
+            {
+                p = frac(p * float2(443.897, 441.423));
+                p += dot(p, p.yx + 19.19);
+                return frac((p.x + p.y) * p.x);
+            }
+
             float3 HashOffset(float3 seedPos, float t)
             {
                 float n = dot(seedPos, float3(12.9898, 78.233, 37.719)) + t;
-                float x = Hash1(n) - 0.5;
-                float y = Hash1(n * 1.37 + 1.7) - 0.5;
-                float z = Hash1(n * 2.13 + 3.1) - 0.5;
-                return float3(x, y, z);
+                return float3(Hash1(n)-0.5, Hash1(n*1.37+1.7)-0.5, Hash1(n*2.13+3.1)-0.5);
             }
 
+            // ──────────────────────── Vertex ──────────────────────────────
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;
 
-                // وقت "مقطّع" (Stepped) عشان التشويش يصير قفزات مفاجئة مثل الداتاموش، مو حركة سلسة
                 float steppedTime = floor(_Time.y * _GlitchSpeed);
+                float3 posWS = TransformObjectToWorld(IN.positionOS.xyz);
 
-                float3 positionWS = TransformObjectToWorld(IN.positionOS.xyz);
+                // Vertex jitter (stepped = مفاجئ مثل الأصلي)
+                float trigger     = Hash1(steppedTime * 7.13);
+                float glitchOn    = step(1.0 - (_GlitchChance * max(_GlitchIntensity, 0.05)), trigger);
+                float3 jitter     = HashOffset(posWS, steppedTime) * _GlitchAmount * glitchOn * (0.5 + _GlitchIntensity);
 
-                float trigger = Hash1(steppedTime * 7.13);
-                float glitchActive = step(1.0 - (_GlitchChance * max(_GlitchIntensity, 0.05)), trigger);
+                // Horizontal Tear على مستوى الفيرتكس
+                float tearLine    = floor(IN.uv.y * _TearCount) / _TearCount;
+                float tearRnd     = Hash1(tearLine + floor(_Time.y * _GlitchSpeed * 0.35));
+                float tearRnd2    = Hash1(tearLine * 3.7 + floor(_Time.y * _GlitchSpeed * 0.7));
+                float tearShift   = (tearRnd < _TearIntensity) ? (tearRnd2 - 0.5) * _TearIntensity * 0.18 : 0.0;
+                jitter.x         += tearShift * _GlitchIntensity;
 
-                float3 jitter = HashOffset(positionWS, steppedTime) * _GlitchAmount * glitchActive * (0.5 + _GlitchIntensity);
-
-                positionWS += jitter;
-
-                OUT.positionWS = positionWS;
-                OUT.positionHCS = TransformWorldToHClip(positionWS);
-                OUT.glitchSeed = steppedTime;
+                posWS            += jitter;
+                OUT.positionWS    = posWS;
+                OUT.positionHCS   = TransformWorldToHClip(posWS);
+                OUT.uv            = IN.uv;
+                OUT.glitchSeed    = steppedTime;
 
                 return OUT;
             }
 
+            // ──────────────────────── Fragment ────────────────────────────
             half4 frag(Varyings IN) : SV_Target
             {
-                float steppedTimeFlicker = floor(_Time.y * _FlickerSpeed);
-                float flickerNoise = Hash1(steppedTimeFlicker * 3.71 + IN.glitchSeed * 0.01);
+                float2 uv           = IN.uv;
+                float  t            = _Time.y;
+                float  steppedFlick = floor(t * _FlickerSpeed);
 
-                // قطع لحظي (الوحش يختفي فجأة لجزء من الثانية) - يعتمد على شدة الغلايتش العامة
+                // ── 1. Flicker Cutout (من الأصلي - محفوظ) ──
+                float flickerNoise  = Hash1(steppedFlick * 3.71 + IN.glitchSeed * 0.01);
                 float flickerActive = step(1.0 - (_FlickerChance * max(_GlitchIntensity, 0.05)), flickerNoise);
                 clip(flickerActive > 0.5 ? -1 : 1);
 
-                // تلوين خفيف وقت لحظات الغلايتش (يحاكي انفصال ألوان بدائي بدون Grab Pass)
-                float tintNoise = Hash1(steppedTimeFlicker * 5.21);
-                float tintActive = step(1.0 - (_TintAmount * max(_GlitchIntensity, 0.05)), tintNoise);
+                // ── 2. Pixel Block Corruption ──
+                float2 blockUV   = floor(uv * _BlockSize) / _BlockSize;
+                float  blockRnd  = Hash2(blockUV + floor(t * _GlitchSpeed * 0.5));
+                float  blockRnd2 = Hash2(blockUV * 2.3 + floor(t * _GlitchSpeed));
+                float2 blockShift = 0;
+                if (blockRnd < _BlockFreq * _GlitchIntensity)
+                {
+                    blockShift.x = (Hash1(blockRnd  + t) - 0.5) * _BlockCorrupt * 0.25;
+                    blockShift.y = (Hash1(blockRnd2 + t) - 0.5) * _BlockCorrupt * 0.08;
+                }
+                uv += blockShift;
 
-                half4 baseColor = _Color;
+                // ── 3. Scanlines ──
+                float scan      = sin((uv.y + t * _ScanlineSpeed * 0.04) * _ScanlineCount * PI);
+                scan            = pow(saturate(scan * 0.5 + 0.5), 1.4);
+                float scanDark  = lerp(1.0, scan, _ScanlineIntensity);
 
-                half4 tintColor = (frac(steppedTimeFlicker * 0.5) < 0.5) ? _TintColorA : _TintColorB;
-                baseColor = lerp(baseColor, tintColor, tintActive * 0.6);
+                // ── 4. Color Tint (من الأصلي - محفوظ) ──
+                float  tintNoise  = Hash1(steppedFlick * 5.21);
+                float  tintActive = step(1.0 - (_TintAmount * max(_GlitchIntensity, 0.05)), tintNoise);
+                half4  tintColor  = (frac(steppedFlick * 0.5) < 0.5) ? _TintColorA : _TintColorB;
+                half4  baseColor  = lerp(_Color, tintColor, tintActive * 0.6);
+
+                // ── 5. تطبيق السكان لاينز على اللون ──
+                baseColor.rgb *= scanDark;
+
+                // ── 6. Black Corruption Blocks (بلوكات سوداء خالصة) ──
+                float2 bigBlock  = floor(uv * (_BlockSize * 0.4)) / (_BlockSize * 0.4);
+                float  blackRnd  = Hash2(bigBlock + floor(t * _GlitchSpeed * 0.45) * 0.37);
+                if (blackRnd < _BlockFreq * _GlitchIntensity * 0.5)
+                    baseColor.rgb = half3(0, 0, 0);
+
+                // ── 7. Black Dominance (الألوان الداكنة → أسود خالص) ──
+                float brightness = dot(baseColor.rgb, half3(0.299, 0.587, 0.114));
+                float blackMask  = 1.0 - smoothstep(0.0, _BlackThreshold, brightness);
+                baseColor.rgb    = lerp(baseColor.rgb, half3(0,0,0), blackMask * _BlackDominance * _GlitchIntensity);
+
+                // ── 8. Global Noise Flicker ──
+                float gFlicker   = Hash2(uv * 80.0 + t * _GlitchSpeed);
+                float gMask      = step(1.0 - _GlitchIntensity * 0.25, gFlicker);
+                baseColor.rgb    = lerp(baseColor.rgb, half3(0,0,0), gMask);
 
                 return baseColor;
             }
