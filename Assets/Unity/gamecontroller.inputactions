@@ -59,6 +59,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Cycle Tool Action",
+                    "type": "Button",
+                    "id": "273337c5-766b-4ac1-8465-fd54d1d2c48d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseTool",
+                    "type": "Button",
+                    "id": "d2050a47-1e23-4fd6-9174-5d18478bb048",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -235,6 +253,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a8e512d-c193-48e4-8d5b-87fdbf8998cf",
+                    "path": "<Keyboard>/#(R)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cycle Tool Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70f85fd8-6d30-4b65-bda5-9f1bfd3c14eb",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cycle Tool Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ccb6eab7-f41d-4ea6-b49b-8133e7b14713",
+                    "path": "<Keyboard>/#(F)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseTool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be524297-5aab-41dc-a2ed-7472374f30a2",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseTool",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
