@@ -1145,7 +1145,7 @@ MonoBehaviour:
     m_DisplayName: Active
   m_Markers:
     m_Objects: []
-  m_PostPlaybackState: 3
+  m_PostPlaybackState: 0
 --- !u!114 &-2318458438233601173
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1711,7 +1711,7 @@ MonoBehaviour:
     m_DisplayName: Active
   m_Markers:
     m_Objects: []
-  m_PostPlaybackState: 3
+  m_PostPlaybackState: 0
 --- !u!114 &6529331142355629163
 MonoBehaviour:
   m_ObjectHideFlags: 1
