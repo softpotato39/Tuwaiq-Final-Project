@@ -106,16 +106,58 @@ public class Portal : MonoBehaviour {
         screen.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
         linkedPortal.screen.material.SetInt ("displayMask", 0);
 
-        for (int i = startIndex; i < recursionLimit; i++) {
-            portalCam.transform.SetPositionAndRotation (renderPositions[i], renderRotations[i]);
-            SetNearClipPlane ();
-            HandleClipping ();
-            portalCam.Render ();
+        // Inside your Portal.cs -> Render() loop
+        for (int i = startIndex; i < recursionLimit; i++)
+        {
+            portalCam.transform.SetPositionAndRotation(renderPositions[i], renderRotations[i]);
+            SetNearClipPlane();
+            HandleClipping();
 
-            if (i == startIndex) {
-                linkedPortal.screen.material.SetInt ("displayMask", 1);
+            // 1. Save original states
+            bool originalFogState = RenderSettings.fog;
+            RenderSettings.fog = false;
+
+            // 2. EXPLICITLY OVERRIDE THE CAMERA RENDERER DATA VIA THE PIPELINE
+#if UNITY_6_OR_NEWER || UNIVERSAL_RENDER_PIPELINE
+            var additionalCameraData = portalCam.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+            
+            // If AERO has an actual script attached directly to the Portal Camera, turn it off!
+            var aeroComponent = portalCam.GetComponent("AeroFog") ?? portalCam.GetComponent("AeroVolumetricFog");
+            bool wasAeroActive = false;
+            if (aeroComponent != null && aeroComponent is MonoBehaviour mb) {
+                wasAeroActive = mb.enabled;
+                mb.enabled = false;
+            }
+#endif
+
+            // Snap the picture clean
+            portalCam.Render();
+
+            // 3. RESTORE EVERYTHING IMMEDIATELY
+            RenderSettings.fog = originalFogState;
+#if UNITY_6_OR_NEWER || UNIVERSAL_RENDER_PIPELINE
+            if (aeroComponent != null && aeroComponent is MonoBehaviour mbRestore) {
+                mbRestore.enabled = wasAeroActive;
+            }
+#endif
+
+            if (i == startIndex)
+            {
+                linkedPortal.screen.material.SetInt("displayMask", 1);
             }
         }
+
+        // ----------- PRE FOG FIX :) -----------
+        //for (int i = startIndex; i < recursionLimit; i++) {
+        //    portalCam.transform.SetPositionAndRotation (renderPositions[i], renderRotations[i]);
+        //    SetNearClipPlane ();
+        //    HandleClipping ();
+        //    portalCam.Render ();
+
+        //    if (i == startIndex) {
+        //        linkedPortal.screen.material.SetInt ("displayMask", 1);
+        //    }
+        //}
 
         // Unhide objects hidden at start of render
         screen.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
@@ -176,8 +218,10 @@ public class Portal : MonoBehaviour {
     }
 
     // Called once all portals have been rendered, but before the player camera renders
-    public void PostPortalRender () {
-        foreach (var traveller in trackedTravellers) {
+    public void PostPortalRender () 
+    {
+        foreach (var traveller in trackedTravellers) 
+        {
             UpdateSliceParams (traveller);
         }
         ProtectScreenFromClipping (playerCam.transform.position);

@@ -68,6 +68,11 @@ namespace InteractionSystem
 
         private void ScanForInteractable()
         {
+
+            // this is to fix a bug where once u pick up an item, u cant pick up a second one
+            if (_currentTarget != null && _currentTarget as UnityEngine.Object == null)
+                _currentTarget = null;
+
             IInteractable found = null;
 
             Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));

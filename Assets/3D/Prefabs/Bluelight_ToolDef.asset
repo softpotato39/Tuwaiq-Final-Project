@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68dcab31bdfb0f943a76e389da56f9bd, type: 3}
-  m_Name: Flashlight_ToolDef
+  m_Name: Bluelight_ToolDef
   m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem.ToolDefinition
-  toolName: Flashy
+  toolName: flooshy
   icon: {fileID: 0}
-  toolPrefab: {fileID: 8013777704304991351, guid: 8d57791032c8fc346b2b68c1a8dbbdcb, type: 3}
+  toolPrefab: {fileID: 281514890166369630, guid: 0ccd35595f91dc14085f9a012edd53c7, type: 3}
