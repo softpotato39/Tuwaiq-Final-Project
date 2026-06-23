@@ -957,6 +957,23 @@ MonoBehaviour:
   flashlight: {fileID: 537877162}
   detectionDistance: 18
   detectionAngle: 25
+--- !u!114 &219902376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219902367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99031f4f651795e48852e908964ea618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlitchManager
+  ghostMaterial: {fileID: 2100000, guid: 97d12bf6454ba76409c95d4ac40bcda0, type: 2}
+  flashlightTransform: {fileID: 537877161}
+  flashlight: {fileID: 537877164}
+  detectionAngle: 25
+  detectionRange: 10
 --- !u!4 &308871035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 281297371296666442, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
@@ -1398,6 +1415,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 219902370}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 219902376}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 219902369}
