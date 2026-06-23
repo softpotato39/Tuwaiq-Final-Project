@@ -557,10 +557,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -3388996257878338913, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
-      propertyPath: m_Name
-      value: Ch455
-      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
       propertyPath: m_Name
       value: Ch45_nonPBR
@@ -811,157 +807,6 @@ MonoBehaviour:
   handsHolder: {fileID: 1320388090}
   itemLocalPosition: {x: 0.3, y: 1.6, z: 0.5}
   itemLocalRotation: {x: 0, y: 0, z: 0}
---- !u!1 &219902367 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
-  m_PrefabInstance: {fileID: 769657027}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &219902369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 219902367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd59e985806ca8499c8a2a330eb27d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MonsterAI
-  player: {fileID: 156211305}
-  wanderRadius: 20
-  wanderIntervalMin: 3
-  wanderIntervalMax: 7
-  fleeRadius: 3
-  fleeDistance: 15
-  fleeSpeed: 6
-  normalSpeed: 2.5
-  hideDelay: 2
-  reappearDelay: 3
-  teleportRadius: 30
-  minTeleportDistance: 15
-  distanceToPlayer: 999
---- !u!195 &219902370
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 219902367}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &219902371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 219902367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1947e525033e09409edc5584ea79cc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FootprintSpawner
-  footprintDecalPrefab: {fileID: 3826844032254851190, guid: db9186c0d9158774c8b7b19e9a25be06, type: 3}
-  leftFootBone: {fileID: 784799036}
-  rightFootBone: {fileID: 308871035}
-  footprintLifetime: 2
-  decalOffsetY: 0.02
---- !u!114 &219902372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 219902367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4955cb0da765247910f67d83ae01ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostGlitchController
-  idleIntensity: 0.15
-  burstIntensity: 1
-  burstDuration: 0.6
---- !u!114 &219902373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 219902367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8badf63a178e7241be3972b30eff728, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostBehavior
-  player: {fileID: 156211305}
-  flashlight: {fileID: 537877162}
-  animator: {fileID: 119036957}
-  walkBoolParam: IsWalking
-  moveSpeed: 1.5
-  wanderRadius: 12
-  rotationSpeed: 4
-  wanderWaitRange: {x: 2, y: 6}
-  enableTeleport: 1
-  teleportIntervalRange: {x: 10, y: 25}
-  minDistanceFromPlayer: 6
-  maxDistanceFromPlayer: 14
-  avoidPlayerViewAngle: 50
-  reactToFlashlight: 1
-  lightReactionChance: 0.6
-  lightDetectionDistance: 18
-  lightDetectionAngle: 25
-  reactionCooldown: 4
-  teleportAwayOnLightReaction: 1
-  freezeDurationOnReaction: 1.2
---- !u!114 &219902374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 219902367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4955cb0da765247910f67d83ae01ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostGlitchController
-  idleIntensity: 0.15
-  burstIntensity: 1
-  burstDuration: 0.6
---- !u!114 &219902375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 219902367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4db6d81e12f4856498f02f42080b24bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostVisibility
-  flashlight: {fileID: 537877162}
-  detectionDistance: 18
-  detectionAngle: 25
---- !u!4 &308871035 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 281297371296666442, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
-  m_PrefabInstance: {fileID: 769657027}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &415339062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,14 +993,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537877160}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4db6d81e12f4856498f02f42080b24bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 10fd276795841ac4eb6371e2e7738dc5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostVisibility
-  flashlight: {fileID: 537877162}
-  detectionDistance: 18
-  detectionAngle: 25
+  m_EditorClassIdentifier: Assembly-CSharp::FlashlightFollowCamera
 --- !u!1 &598124346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,33 +1237,13 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+    - targetCorrespondingSourceObject: {fileID: -3388996257878338913, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 219902370}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      addedObject: {fileID: 1955757572}
+    - targetCorrespondingSourceObject: {fileID: -3388996257878338913, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 219902369}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 219902371}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 219902374}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 219902373}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 219902372}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 219902375}
+      addedObject: {fileID: 1955757571}
   m_SourcePrefab: {fileID: 100100000, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
---- !u!4 &784799036 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4741763956638393273, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
-  m_PrefabInstance: {fileID: 769657027}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1126512469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,6 +1773,58 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!1 &1955757568 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3388996257878338913, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+  m_PrefabInstance: {fileID: 769657027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1955757571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955757568}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8badf63a178e7241be3972b30eff728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostBehavior
+  player: {fileID: 156211305}
+  flashlight: {fileID: 537877162}
+  animator: {fileID: 119036957}
+  walkBoolParam: IsWalking
+  moveSpeed: 1.5
+  wanderRadius: 12
+  rotationSpeed: 4
+  wanderWaitRange: {x: 2, y: 6}
+  enableTeleport: 1
+  teleportIntervalRange: {x: 10, y: 25}
+  minDistanceFromPlayer: 6
+  maxDistanceFromPlayer: 14
+  avoidPlayerViewAngle: 50
+  reactToFlashlight: 1
+  lightReactionChance: 0.6
+  lightDetectionDistance: 18
+  lightDetectionAngle: 25
+  reactionCooldown: 4
+  teleportAwayOnLightReaction: 1
+  freezeDurationOnReaction: 1.2
+--- !u!114 &1955757572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955757568}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4955cb0da765247910f67d83ae01ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostGlitchController
+  idleIntensity: 0.15
+  burstIntensity: 1
+  burstDuration: 0.6
 --- !u!1 &1993833983
 GameObject:
   m_ObjectHideFlags: 0
