@@ -10336,6 +10336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimeLookChase
   player: {fileID: 1638170406478972996}
+  targetCamera: {fileID: 0}
+  requireLineOfSight: 0
 --- !u!195 &1072152946
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10346,7 +10348,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 9.48
+  m_Speed: 5.06
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

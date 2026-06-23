@@ -3,44 +3,155 @@ using UnityEngine.AI;
 
 public class AnimeLookChase : MonoBehaviour
 {
+    [Header("References")]
     public Transform player;
+    public Camera targetCamera;
+
+    [Header("Optional")]
+    public bool requireLineOfSight = false; // إذا تبيه يتوقف فقط لما يكون ظاهر بدون جدار بينه وبين اللاعب
 
     private NavMeshAgent agent;
-    private Camera cam;
+    private Renderer[] renderers;
+    private Collider[] colliders;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        cam = Camera.main;
+
+        if (targetCamera == null)
+            targetCamera = Camera.main;
+
+        renderers = GetComponentsInChildren<Renderer>();
+        colliders = GetComponentsInChildren<Collider>();
     }
 
     void Update()
     {
-        if (CanPlayerSeeMe())
+        if (player == null || targetCamera == null || agent == null)
+            return;
+
+        bool visible = IsAnyPartVisible();
+
+        if (visible)
+        {
+            StopAgentImmediately();
+        }
+        else
         {
             agent.isStopped = false;
             agent.SetDestination(player.position);
         }
-        else
-        {
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero; // 👈 هذا اللي يخليه يتجمد فورًا
-        }
     }
 
-    bool CanPlayerSeeMe()
+    void StopAgentImmediately()
     {
-        Vector3 dirToEnemy = (transform.position - cam.transform.position);
-        float angle = Vector3.Angle(cam.transform.forward, dirToEnemy);
+        if (!agent.isStopped)
+            agent.isStopped = true;
 
-        if (angle < 60f)
+        agent.ResetPath();
+        agent.velocity = Vector3.zero;
+
+        // هذا يساعد أكثر في منع الانزلاق الخفيف
+        if (agent.hasPath)
+            agent.ResetPath();
+    }
+
+    bool IsAnyPartVisible()
+    {
+        Bounds totalBounds;
+        if (!TryGetTotalBounds(out totalBounds))
+            return false;
+
+        if (!IsBoundsInCameraView(targetCamera, totalBounds))
+            return false;
+
+        if (requireLineOfSight && !HasLineOfSightToBounds(targetCamera, totalBounds))
+            return false;
+
+        return true;
+    }
+
+    bool TryGetTotalBounds(out Bounds totalBounds)
+    {
+        bool hasBounds = false;
+        totalBounds = new Bounds(transform.position, Vector3.zero);
+
+        // نفضل الـ Renderers لأنها تمثل الشيء المرئي فعليًا
+        if (renderers != null && renderers.Length > 0)
         {
-            Ray ray = new Ray(cam.transform.position, dirToEnemy.normalized);
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            foreach (Renderer r in renderers)
             {
-                return hit.transform == transform;
+                if (r == null || !r.enabled)
+                    continue;
+
+                if (!hasBounds)
+                {
+                    totalBounds = r.bounds;
+                    hasBounds = true;
+                }
+                else
+                {
+                    totalBounds.Encapsulate(r.bounds);
+                }
             }
+        }
+
+        // إذا ما فيه Renderers نستخدم Colliders
+        if (!hasBounds && colliders != null && colliders.Length > 0)
+        {
+            foreach (Collider c in colliders)
+            {
+                if (c == null || !c.enabled)
+                    continue;
+
+                if (!hasBounds)
+                {
+                    totalBounds = c.bounds;
+                    hasBounds = true;
+                }
+                else
+                {
+                    totalBounds.Encapsulate(c.bounds);
+                }
+            }
+        }
+
+        return hasBounds;
+    }
+
+    bool IsBoundsInCameraView(Camera cam, Bounds bounds)
+    {
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
+        return GeometryUtility.TestPlanesAABB(planes, bounds);
+    }
+
+    bool HasLineOfSightToBounds(Camera cam, Bounds bounds)
+    {
+        Vector3 camPos = cam.transform.position;
+
+        Vector3[] points = new Vector3[]
+        {
+            bounds.center,
+            new Vector3(bounds.min.x, bounds.min.y, bounds.min.z),
+            new Vector3(bounds.min.x, bounds.min.y, bounds.max.z),
+            new Vector3(bounds.min.x, bounds.max.y, bounds.min.z),
+            new Vector3(bounds.min.x, bounds.max.y, bounds.max.z),
+            new Vector3(bounds.max.x, bounds.min.y, bounds.min.z),
+            new Vector3(bounds.max.x, bounds.min.y, bounds.max.z),
+            new Vector3(bounds.max.x, bounds.max.y, bounds.min.z),
+            new Vector3(bounds.max.x, bounds.max.y, bounds.max.z)
+        };
+
+        foreach (Vector3 point in points)
+        {
+            Vector3 dir = point - camPos;
+            float dist = dir.magnitude;
+
+            if (!Physics.Raycast(camPos, dir.normalized, out RaycastHit hit, dist))
+                return true;
+
+            if (hit.transform == transform || hit.transform.IsChildOf(transform))
+                return true;
         }
 
         return false;
