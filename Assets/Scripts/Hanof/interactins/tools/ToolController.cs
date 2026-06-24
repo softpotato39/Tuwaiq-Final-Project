@@ -6,19 +6,14 @@ using UnityEngine.InputSystem;
 
 namespace InteractionSystem
 {
-    /// <summary>
-    /// Lives on the player alongside PlayerInteractor. Tracks which tools have been unlocked
-    /// (via ToolKitPickup) and equips/cycles through them with a single axis input action
-    /// (bumpers, D-pad, or mouse scroll - whatever you bind CycleTool to in your Terminal/Player map).
-    /// </summary>
+    // this script goes on: THE PLAYER
+    // it basically tracks what tools have been unlocked and cycles them
     public class ToolController : MonoBehaviour
     {
-        [Header("Input")]
-        [Tooltip("A Value/Axis action: positive value = next tool, negative = previous tool.")]
+        [Header("Input")]   // in the inspector assign the input actions here
         [SerializeField] private InputActionReference cycleToolAction;
-        [Tooltip("Optional Button action: activates whatever's currently equipped, if it implements IUsableTool (e.g. toggling a flashlight).")]
         [SerializeField] private InputActionReference useToolAction;
-        [SerializeField] private InputActionReference unequipToolAction;
+        [SerializeField] private InputActionReference unequipToolAction;    //the same button for equip and unequip :3 i like it this way
 
         [Header("Equip Point")]
         [SerializeField] private Transform toolSocket;

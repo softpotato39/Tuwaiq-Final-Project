@@ -2,15 +2,14 @@ using UnityEngine;
 
 namespace InteractionSystem
 {
-    /// <summary>
-    /// A "kit" the player picks up once to unlock several ToolDefinitions on their
-    /// ToolController, e.g. a janitor kit that unlocks Mop, Sponge and Vacuum.
-    /// </summary>
+
+    // this script stays on: the objects the player goes to pick up !
+    // basically a kit u chose what prefab tools to unlock
     public class ToolKitPickup : MonoBehaviour, IInteractable
     {
-        [Tooltip("World-space icon/GameObject shown while this is the look-at target.")]
-        [SerializeField] private GameObject promptIcon;
-        [SerializeField] private ToolDefinition[] toolsToUnlock;
+        [SerializeField] private GameObject promptIcon;    // the icon in the ui that pops up
+        [SerializeField] private AudioSource pickupSound;   // the that plays once the thingie is destroyed
+        [SerializeField] private ToolDefinition[] toolsToUnlock;    // in the inspector u assign the tools u want the player to get here
         [SerializeField] private bool destroyOnPickup = true;
 
         public void ShowPrompt() => promptIcon?.SetActive(true);
@@ -24,14 +23,17 @@ namespace InteractionSystem
             ToolController controller = interactor.GetComponent<ToolController>();
             if (controller == null)
             {
-                Debug.LogWarning("ToolKitPickup: no ToolController found on the player.", this);
+                Debug.LogWarning("missing toolcontroller on PLAYER !", this);
                 return;
             }
 
             controller.UnlockTools(toolsToUnlock);
 
             if (destroyOnPickup)
+                promptIcon.SetActive(false);
+                pickupSound.Play();
                 Destroy(gameObject);
+
         }
     }
 }

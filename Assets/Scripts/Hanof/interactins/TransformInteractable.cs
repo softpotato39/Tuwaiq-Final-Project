@@ -8,7 +8,7 @@ namespace InteractionSystem
     /// becoming a tidy one. Swap GameObjects/meshes, drive an Animator, or just listen to
     /// OnCompleted - whichever fits the object.
     /// </summary>
-    public class holdE : MonoBehaviour, IHoldInteractable
+    public class TransfromInteractable : MonoBehaviour, IHoldInteractable
     {
         [Header("Prompt")]
         [Tooltip("World-space icon/GameObject shown while this is the look-at target and not yet completed.")]

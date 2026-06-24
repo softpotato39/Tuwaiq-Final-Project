@@ -4,34 +4,28 @@ using UnityEngine.InputSystem;
 
 namespace InteractionSystem
 {
-    /// <summary>
-    /// Lives on the player. Casts a ray from the centre of the camera each frame to find the
-    /// IInteractable being looked at, fires prompt-change events for UI, and routes the
-    /// Interact input action into either a single Interact() call or a tracked hold sequence
-    /// (for anything implementing IHoldInteractable). Also tracks the item currently being
-    /// carried, which PickupItem and TrashBin read/write.
-    /// </summary>
+    // this script stays on: THE PLAYER
+    //using raycast from the player camera, detect interactables and show UI :3
+    // can be used for interact or hold to interact
+    // also tracks held items
     [DisallowMultipleComponent]
     public class PlayerInteractor : MonoBehaviour
     {
+        //all these "serializedField" things are to make the code private and secure, but still show it in unity
         [Header("Detection")]
-        [SerializeField] private Camera playerCamera;
-        [SerializeField] private float interactRange = 3f;
-        [Tooltip("0 = pure raycast. >0 = SphereCast, more forgiving for small/thin objects.")]
+        [SerializeField] private Camera playaCam;   // player camera :3
+        [SerializeField] private float interactRange = 3f; 
         [SerializeField] private float interactRadius = 0.15f;
         [SerializeField] private LayerMask interactableMask = ~0;
 
         [Header("Input")]
-        [Tooltip("A Button-type action, e.g. E / Gamepad South button.")]
         [SerializeField] private InputActionReference interactAction;
 
         [Header("Carry Point")]
-        [Tooltip("Empty transform on the player (e.g. under the camera or a hand bone) where picked-up items get parented.")]
-        [SerializeField] private Transform handSocket;
+        [SerializeField] private Transform handSocket;      //this is the empty hand place for the player
 
         [Header("Events")]
-        [Tooltip("Fires 0..1 while holding Interact on an IHoldInteractable, and resets to 0 on release/cancel/complete.")]
-        public UnityEvent<float> OnHoldProgressChanged;
+        public UnityEvent<float> OnHoldProgressChanged; //this is for the progress for hold to interact, starts 0 goes to 1
 
         public PickupItem CurrentItem { get; private set; }
         public Transform HandSocket => handSocket;
@@ -58,7 +52,7 @@ namespace InteractionSystem
             if (_isHolding) CancelHold();
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             ScanForInteractable();
 
@@ -75,7 +69,7 @@ namespace InteractionSystem
 
             IInteractable found = null;
 
-            Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            Ray ray = playaCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             bool hit = interactRadius > 0f
                 ? Physics.SphereCast(ray, interactRadius, out RaycastHit info, interactRange, interactableMask, QueryTriggerInteraction.Collide)
                 : Physics.Raycast(ray, out info, interactRange, interactableMask, QueryTriggerInteraction.Collide);
