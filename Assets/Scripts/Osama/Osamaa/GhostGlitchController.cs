@@ -1,27 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
-/// íÊÍßã ÈÔÏÉ ÇáÛáÇíÊÔ (_GlitchIntensity) İí ÔíÏÑ GhostGlitch áßá ÇáÑäÏÑÑÇÊ
-/// ÊÍÊ åĞÇ ÇáÃæÈÌßÊ (ãËá Ch45_nonPBR æßá ÃÌÒÇÁ ÇáÌÓã).
+/// íÊÍßã ÈÔÏÉ ÊÃËíÑ ÇáÛáÇíÊÔ (_GlitchIntensity) İí ÔíÏÑ GhostGlitch ÚÈÑ MaterialPropertyBlock
+/// ÈÏæä ÅäÔÇÁ äÓÎ ÌÏíÏÉ ãä ÇáãÇÊíÑíÇá.
 ///
-/// ØÑíŞÉ ÇáÅÚÏÇÏ:
-/// 1. ÃäÔÆ ãÇÊíÑíÇá ÌÏíÏ æÇÎÊÇÑ áå Shader = Custom/GhostGlitch.
-/// 2. ØÈøŞ ÇáãÇÊíÑíÇá Úáì ßá ŞØÚ ÇáãíÔ ÈÊÇÚÉ ÇáæÍÔ (Ch45_Body ãËáÇğ).
-/// 3. Öíİ åĞÇ ÇáÓßÑÈÊ Úáì ÇáÃæÈÌßÊ ÇáÌĞÑ ááæÍÔ (äİÓ Çááí İíå Animator).
-/// 4. ÓßÑÈÊÇÊ ÇáÓáæß (GhostBehavior) ÊŞÏÑ ÊäÇÏí TriggerBurst() ÚÔÇä áÍÙÉ ÛáÇíÊÔ ŞæíÉ.
+/// ØÑíŞÉ ÇáÇÓÊÎÏÇã:
+/// 1. Öíİå Úáì äİÓ ÇáÃæÈÌßÊ Çááí Úáíå ÇáÔíÏÑ = Custom/GhostGlitch.
+/// 2. ÇáŞíã ÊäØÈŞ Úáì ßá ÇáÜ Renderers ÊÍÊ åĞÇ ÇáÃæÈÌßÊ.
+/// 3. ÓßÑÈÊÇÊ ÃÎÑì (ãËá GhostBehavior) ÊŞÏÑ ÊÓÊÏÚí TriggerBurst() æŞÊ ÑÏ İÚá ãİÇÌÆ.
 /// </summary>
 public class GhostGlitchController : MonoBehaviour
 {
-    [Header("ÇáÔÏÉ ÇáÇİÊÑÇÖíÉ")]
-    [Tooltip("ÔÏÉ ÇáÛáÇíÊÔ ÇáØÈíÚíÉ æŞÊ ãÇ ÇáæÍÔ åÇÏÆ (ÊãÔíÉ ÚÇÏíÉ)")]
+    [Header("ÔÏÉ ÇáÛáÇíÊÔ")]
+    [Tooltip("ÔÏÉ ÇáÛáÇíÊÔ æŞÊ ãÇ ÇáæÍÔ åÇÏÆ")]
     [Range(0f, 1f)] public float idleIntensity = 0.15f;
 
-    [Tooltip("ÔÏÉ ÇáÛáÇíÊÔ æŞÊ äæÈÉ ŞæíÉ (ÊíáíÈæÑÊ / ÑÏ İÚá Úáì ÇáÖæÁ)")]
+    [Tooltip("ÔÏÉ ÇáÛáÇíÊÔ æŞÊ ÑÏ İÚá ãİÇÌÆ (ÊíáíÈæÑÊ / İáÇÔ áÇíÊ)")]
     [Range(0f, 1f)] public float burstIntensity = 1f;
 
-    [Tooltip("ãÏÉ äæÈÉ ÇáÛáÇíÊÔ ÇáŞæíÉ ÈÇáËæÇäí")]
+    [Tooltip("ßã ËÇäíÉ ÊÓÊãÑ ÔÏÉ ÇáÜ Burst ŞÈá ãÇ ÊÑÌÚ ááæÖÚ ÇáåÇÏÆ")]
     public float burstDuration = 0.6f;
 
     private static readonly int GlitchIntensityID = Shader.PropertyToID("_GlitchIntensity");
@@ -43,9 +41,6 @@ public class GhostGlitchController : MonoBehaviour
         ApplyIntensity(_currentIntensity);
     }
 
-    /// <summary>
-    /// íØáŞ äæÈÉ ÛáÇíÊÔ ŞæíÉ áİÊÑÉ ŞÕíÑÉ Ëã íÑÌÚ ááæÖÚ ÇáØÈíÚí.
-    /// </summary>
     public void TriggerBurst()
     {
         if (_burstRoutine != null)
@@ -63,9 +58,6 @@ public class GhostGlitchController : MonoBehaviour
         _burstRoutine = null;
     }
 
-    /// <summary>
-    /// ÊÍÏíÏ ÔÏÉ ÇáÛáÇíÊÔ íÏæíÇğ (ÊÓÊÎÏãåÇ ÓßÑÈÊÇÊ ÃÎÑì ÚäÏ ÇáÍÇÌÉ).
-    /// </summary>
     public void SetIntensity(float value)
     {
         ApplyIntensity(Mathf.Clamp01(value));

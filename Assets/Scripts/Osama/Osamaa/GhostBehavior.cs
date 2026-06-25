@@ -2,18 +2,13 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Óáæß ÇáæÍÔ ÇáÃÓæÏ: ãÒíÌ Èíä ÊãÔíÉ ÚÔæÇÆíÉ + ÊíáíÈæÑÊ ŞÑíÈ ãä ÇááÇÚÈ + ÑÏ İÚá
-/// áãÇ ÇáİáÇÔ áÇíÊ íÖæí Úáíå. åĞÇ ÇáÓßÑÈÊ áÇ íÃËÑ Úáì ÇááÇÚÈ ÃÈÏÇğ (ÈÏæä ÖÑÑ/Game Over)¡
-/// ßáå ÊÃËíÑÇÊ ÌæíÉ/ÑÚÈ ÈÕÑí ÈÓ.
-///
-/// ØÑíŞÉ ÇáÅÚÏÇÏ:
-/// 1. Öíİå Úáì ÇáÃæÈÌßÊ ÇáÌĞÑ ááæÍÔ (äİÓ ãÓÊæì Animator æ Ch45_nonPBR).
-/// 2. ÇÑÈØ "player" ÈÊÑÇäÓİæÑã ÇááÇÚÈ.
-/// 3. (ÇÎÊíÇÑí) ÇÑÈØ "flashlight" ÈÓßÑÈÊ PurpleFlashlight ÚÔÇä íÊİÇÚá æŞÊ ÇáÅÖÇÁÉ Úáíå.
-/// 4. áæ ÚäÏß NavMesh ãÈíøß ÈÇáÓíä¡ Öíİ NavMeshAgent Úáì äİÓ ÇáÃæÈÌßÊ æÑÇÍ íÓÊÎÏãå
-///    ÊáŞÇÆíÇğ ááÊäŞá ÇáĞßí. áæ ãÇÚäÏß NavMesh¡ íÊÍÑß ÈÎØ ãÈÇÔÑ ÈÔßá ÊáŞÇÆí ÈÏæä ãÔÇßá.
-/// 5. ÊÃßÏ Åä ÇÓã ÇáÈÑÇãíÊÑ "walkBoolParam" íØÇÈŞ ÇáÈÑÇãíÊÑ ÇáãæÌæÏ ÈÇáÜ Animator ÇáÎÇÕ Èß
-///    (Çááí íÔÛøá Monster-Walking).
+/// æÍÔ ÇáÎØæÇÊ: ÊÌæÇá Úáì ÇáÃÑÖ/ÇáÌÏÑÇä/ÇáÓŞİ + ÊíáíÈæÑÊ ŞÑíÈ ãä ÇááÇÚÈ + ÑÏ İÚá Úáì ÇáİáÇÔáÇíÊ.
+/// ãÊØáÈÇÊ ÅÚÏÇÏ:
+/// 1. Öíİå Úáì äİÓ ÇáÃæÈÌßÊ Çááí İíå Animator (ãËá Ch45_nonPBR).
+/// 2. ÇÓÍÈ "player" ÈÇáÜ Inspector.
+/// 3. (ÇÎÊíÇÑí) ÇÓÍÈ "flashlight" áæ ÊÈí ÑÏ İÚá ÚäÏ ÇáÅÖÇÁÉ Úáíå.
+/// 4. ÚÔÇä íãÔí Úáì ÇáÌÏÑÇä/ÇáÓŞİ: áÇ ÊÖíİ NavMeshAgent (Ãæ ÚØøáå)¡ æÊÃßÏ Åä ÇáÌÏÑÇä æÇáÓŞİ ÚäÏåã Collider.
+/// 5. ÇÓã ÇáÈæá ÈÇÑÇãÊÑ ÈÇáÃäãíÊÑ "walkBoolParam" íØÇÈŞ ÇáãæÌæÏ (ãËá Monster-Walking).
 /// </summary>
 [RequireComponent(typeof(GhostGlitchController))]
 public class GhostBehavior : MonoBehaviour
@@ -25,36 +20,41 @@ public class GhostBehavior : MonoBehaviour
         Teleporting
     }
 
-    [Header("ÇáÑÈØ")]
+    [Header("ÇáãÑÇÌÚ")]
     public Transform player;
     public PurpleFlashlight flashlight;
     public Animator animator;
     public string walkBoolParam = "IsWalking";
 
-    [Header("ÇáÊãÔíÉ ÇáÚÔæÇÆíÉ")]
+    [Header("ÅÚÏÇÏÇÊ ÇáÊÌæÇá")]
     public float moveSpeed = 1.5f;
     public float wanderRadius = 12f;
     public float rotationSpeed = 4f;
-    [Tooltip("ÃŞá æÃßËÑ æŞÊ íäÊÙÑå ŞÈá ãÇ íÎÊÇÑ æÌåÉ ÌÏíÏÉ")]
+    [Tooltip("ãÏì ÇáÒãä Èíä äŞØÉ æÃÎÑì æŞÊ ãÇ íŞİ ÇáæÍÔ")]
     public Vector2 wanderWaitRange = new Vector2(2f, 6f);
 
-    [Header("ÇáÊíáíÈæÑÊ ŞÑíÈ ãä ÇááÇÚÈ")]
+    [Header("ÇáãÔí Úáì ÇáÃÓØÍ (ÌÏÑÇä/ÓŞİ)")]
+    [Tooltip("áæ ãİÚøá¡ ÇáæÍÔ íáÊÕŞ ÈÃŞÑÈ ÓØÍ (ÃÑÖíÉ/ÌÏÇÑ/ÓŞİ) æíÊÍÑß Úáíå ÈÏá ãÇ íÈŞì ËÇÈÊ Úáì ÇáÃÑÖíÉ İŞØ")]
+    public bool enableSurfaceWalking = true;
+    public float surfaceCheckDistance = 1.5f;
+    public LayerMask surfaceMask = ~0;
+    public float surfaceRotateSpeed = 8f;
+
+    [Header("ÇáÊíáíÈæÑÊ ŞÑÈ ÇááÇÚÈ")]
     public bool enableTeleport = true;
     public Vector2 teleportIntervalRange = new Vector2(10f, 25f);
     public float minDistanceFromPlayer = 6f;
     public float maxDistanceFromPlayer = 14f;
-    [Tooltip("áæ ÒÇæíÉ ÇááÇÚÈ Úä äŞØÉ ÇáÊíáíÈæÑÊ ÃŞá ãä åĞÇ¡ íÚÊÈÑ ÈãÌÇá äÙÑå æíÊÌäÈåÇ")]
+    [Tooltip("áæ ÇáÒÇæíÉ ÃßÈÑ ãä åĞÇ íÚÊÈÑ ÈÚíÏ Úä äÙÑ ÇááÇÚÈ¡ íÕáÍ ááÊíáíÈæÑÊ")]
     public float avoidPlayerViewAngle = 50f;
 
-    [Header("ÑÏ ÇáİÚá Úáì ÇáİáÇÔ áÇíÊ")]
+    [Header("ÑÏ ÇáİÚá ÚäÏ ÇáİáÇÔáÇíÊ")]
     public bool reactToFlashlight = true;
     [Range(0f, 1f)] public float lightReactionChance = 0.6f;
     public float lightDetectionDistance = 18f;
     public float lightDetectionAngle = 25f;
     public float reactionCooldown = 4f;
-    [Tooltip("ÈÚÏ ãÇ íÊİÇÌÃ ãä ÇáÖæÁ¡ íÎÊİí æíØáÚ ÈãßÇä ËÇäí")]
     public bool teleportAwayOnLightReaction = true;
-    [Tooltip("ÈÏá ÇáÊíáíÈæÑÊ¡ íÊÌãÏ æíÍÏøŞ ÈÇááÇÚÈ áÍÙÇÊ ŞÈá áÇ íÎÊİí (íÑİÚ ÇáÑÚÈ)")]
     public float freezeDurationOnReaction = 1.2f;
 
     private NavMeshAgent _agent;
@@ -62,14 +62,17 @@ public class GhostBehavior : MonoBehaviour
     private State _state = State.Wandering;
 
     private Vector3 _wanderTarget;
+    private Vector3 _wanderDirection;
     private float _wanderTimer;
     private float _teleportTimer;
     private float _reactionCooldownTimer;
     private float _freezeTimer;
 
+    private Vector3 _currentNormal = Vector3.up;
+
     private void Awake()
     {
-        _agent = GetComponent<NavMeshAgent>(); // ÇÎÊíÇÑí¡ ããßä íßæä null
+        _agent = GetComponent<NavMeshAgent>();
         _glitch = GetComponent<GhostGlitchController>();
 
         if (animator == null)
@@ -80,7 +83,14 @@ public class GhostBehavior : MonoBehaviour
 
     private void Start()
     {
-        PickNewWanderTarget();
+        if (enableSurfaceWalking)
+        {
+            PickNewWanderDirection();
+        }
+        else
+        {
+            PickNewWanderTarget();
+        }
         ResetTeleportTimer();
     }
 
@@ -89,6 +99,11 @@ public class GhostBehavior : MonoBehaviour
         if (_reactionCooldownTimer > 0f)
         {
             _reactionCooldownTimer -= Time.deltaTime;
+        }
+
+        if (enableSurfaceWalking && _agent == null)
+        {
+            AlignToSurface();
         }
 
         switch (_state)
@@ -102,7 +117,6 @@ public class GhostBehavior : MonoBehaviour
                 break;
 
             case State.Teleporting:
-                // ÍÇáÉ áÍÙíÉ¡ ÇáÊÍæíá íÕíÑ İæÑÇğ ÏÇÎá DoTeleport
                 break;
         }
 
@@ -122,11 +136,17 @@ public class GhostBehavior : MonoBehaviour
         }
     }
 
-    // ---------------- ÇáÊãÔíÉ ÇáÚÔæÇÆíÉ ----------------
+    // ---------------- ÇáÊÌæÇá ----------------
 
     private void UpdateWandering()
     {
         SetWalking(true);
+
+        if (enableSurfaceWalking && _agent == null)
+        {
+            UpdateSurfaceWandering();
+            return;
+        }
 
         if (_agent != null && _agent.enabled)
         {
@@ -156,6 +176,64 @@ public class GhostBehavior : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
             }
         }
+    }
+
+    // ---------------- ãäØŞ ÇáãÔí Úáì ÇáÃÓØÍ (ÌÏÇÑ/ÓŞİ/ÃÑÖíÉ) ----------------
+
+    private void AlignToSurface()
+    {
+        Vector3 origin = transform.position + transform.up * 0.1f;
+
+        if (Physics.Raycast(origin, -transform.up, out RaycastHit hit, surfaceCheckDistance, surfaceMask))
+        {
+            _currentNormal = hit.normal;
+        }
+        else
+        {
+            Vector3[] dirs = { transform.forward, -transform.forward, transform.right, -transform.right };
+            foreach (var d in dirs)
+            {
+                Vector3 o = transform.position + d * 0.3f;
+                if (Physics.Raycast(o, -transform.up, out RaycastHit h2, surfaceCheckDistance, surfaceMask))
+                {
+                    _currentNormal = h2.normal;
+                    break;
+                }
+            }
+        }
+
+        Quaternion targetRot = Quaternion.FromToRotation(transform.up, _currentNormal) * transform.rotation;
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, surfaceRotateSpeed * Time.deltaTime);
+    }
+
+    private void UpdateSurfaceWandering()
+    {
+        Quaternion lookRot = Quaternion.LookRotation(_wanderDirection, _currentNormal);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, rotationSpeed * Time.deltaTime);
+        transform.position += transform.forward * moveSpeed * Time.deltaTime;
+
+        _wanderTimer -= Time.deltaTime;
+        if (_wanderTimer <= 0f)
+        {
+            WaitThenPickNewDirection();
+        }
+    }
+
+    private void WaitThenPickNewDirection()
+    {
+        SetWalking(false);
+        PickNewWanderDirection();
+    }
+
+    private void PickNewWanderDirection()
+    {
+        Vector3 randomTangent = Vector3.ProjectOnPlane(Random.onUnitSphere, _currentNormal).normalized;
+        if (randomTangent.sqrMagnitude < 0.01f)
+        {
+            randomTangent = transform.forward;
+        }
+        _wanderDirection = randomTangent;
+        _wanderTimer = Random.Range(wanderWaitRange.x, wanderWaitRange.y);
     }
 
     private void WaitThenPickNewTarget()
@@ -191,7 +269,7 @@ public class GhostBehavior : MonoBehaviour
         }
     }
 
-    // ---------------- ÇáÊÌãÏ (ŞÈá ÇáÇÎÊİÇÁ) ----------------
+    // ---------------- ÇáÊÌãÏ (ÑÏ İÚá ÇáİáÇÔáÇíÊ) ----------------
 
     private void UpdateFrozen()
     {
@@ -200,10 +278,10 @@ public class GhostBehavior : MonoBehaviour
         if (player != null)
         {
             Vector3 lookDir = player.position - transform.position;
-            lookDir.y = 0f;
+            lookDir = Vector3.ProjectOnPlane(lookDir, _currentNormal);
             if (lookDir.sqrMagnitude > 0.001f)
             {
-                Quaternion targetRot = Quaternion.LookRotation(lookDir.normalized);
+                Quaternion targetRot = Quaternion.LookRotation(lookDir.normalized, _currentNormal);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
             }
         }
@@ -216,11 +294,14 @@ public class GhostBehavior : MonoBehaviour
                 DoTeleportNearPlayer();
             }
             _state = State.Wandering;
-            PickNewWanderTarget();
+            if (enableSurfaceWalking && _agent == null)
+                PickNewWanderDirection();
+            else
+                PickNewWanderTarget();
         }
     }
 
-    // ---------------- ÇáÊíáíÈæÑÊ ŞÑíÈ ãä ÇááÇÚÈ ----------------
+    // ---------------- ÇáÊíáíÈæÑÊ ŞÑÈ ÇááÇÚÈ ----------------
 
     private void ResetTeleportTimer()
     {
@@ -248,12 +329,14 @@ public class GhostBehavior : MonoBehaviour
         }
 
         _state = State.Wandering;
-        PickNewWanderTarget();
+        if (enableSurfaceWalking && _agent == null)
+            PickNewWanderDirection();
+        else
+            PickNewWanderTarget();
     }
 
     private Vector3 FindTeleportPosition()
     {
-        // äÍÇæá áÚÏÉ ãÑÇÊ äáŞì äŞØÉ ÈÚíÏÉ Úä ãÌÇá äÙÑ ÇááÇÚÈ ÇáãÈÇÔÑ
         for (int attempt = 0; attempt < 10; attempt++)
         {
             float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
@@ -275,11 +358,10 @@ public class GhostBehavior : MonoBehaviour
             }
         }
 
-        // áæ İÔáÊ ßá ÇáãÍÇæáÇÊ¡ íÑÌÚ äŞØÉ ÈÓíØÉ Îáİ ÇááÇÚÈ
         return player.position - player.forward * minDistanceFromPlayer;
     }
 
-    // ---------------- ÑÏ ÇáİÚá Úáì ÇáİáÇÔ áÇíÊ ----------------
+    // ---------------- ÑÏ ÇáİÚá ÚäÏ ÇáİáÇÔáÇíÊ ----------------
 
     private void CheckFlashlightReaction()
     {
@@ -303,10 +385,9 @@ public class GhostBehavior : MonoBehaviour
             return;
         }
 
-        // ÇáæÍÔ ãßÔæİ ÈÇáÖæÁ ÇáÂä
         if (Random.value > lightReactionChance)
         {
-            return; // ãÇ ÑÏ¡ íÊÌÇåá åĞí ÇáãÑÉ ÚÔæÇÆíÇğ ÚÔÇä ãÇíÕíÑ ãÊæŞÚ
+            return;
         }
 
         _reactionCooldownTimer = reactionCooldown;
