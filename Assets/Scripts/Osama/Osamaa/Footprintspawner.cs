@@ -1,45 +1,31 @@
 ﻿using UnityEngine;
-using UnityEngine.Rendering.Universal;
-
 
 public class FootprintSpawner : MonoBehaviour
 {
-
-    
-    public GameObject footprintDecalPrefab;   
-
-    
-    public Transform leftFootBone;            
-    public Transform rightFootBone;           
-
-    
-    public float footprintLifetime = 2f;      
-    public float decalOffsetY = 0.02f;        
-
+    public Transform leftFootBone;
+    public Transform rightFootBone;
+    public LayerMask surfaceMask = ~0;
+    public float surfaceSearchDistance = 1f;
 
     public void SpawnFootprint(string foot)
     {
-        if (footprintDecalPrefab == null) return;
-
-        
         Transform targetBone = foot == "left" ? leftFootBone : rightFootBone;
         if (targetBone == null)
         {
-            Debug.LogWarning($"FootprintSpawner: عظمة القدم '{foot}' غير محددة في Inspector.");
+            Debug.LogWarning($"FootprintSpawner: عظمة القدم '{foot}' غير محددة.");
             return;
         }
 
-       
-        Vector3 spawnPos = targetBone.position;
-        spawnPos.y += decalOffsetY;
+        Vector3 surfaceDown = -transform.up;
+        Vector3 rayOrigin = targetBone.position - surfaceDown * 0.2f;
 
-        
-        Quaternion spawnRot = Quaternion.LookRotation(Vector3.down, transform.forward);
-
-        
-        GameObject decal = Instantiate(footprintDecalPrefab, spawnPos, spawnRot);
-
-        
-        Destroy(decal, footprintLifetime);
+        if (Physics.Raycast(rayOrigin, surfaceDown, out RaycastHit hit, surfaceSearchDistance, surfaceMask))
+        {
+            SurfaceTrailPainter painter = hit.collider.GetComponent<SurfaceTrailPainter>();
+            if (painter != null)
+            {
+                painter.PaintAt(hit.textureCoord);
+            }
+        }
     }
 }
