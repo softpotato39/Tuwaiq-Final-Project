@@ -5,6 +5,7 @@ using System.Collections;
 public class ambiencefader : MonoBehaviour
 {
     public float fadeTime = 1.0f;
+    [Range(0f, 1f)] public float targetVolume = 0.5f;   // the volume u want
     private AudioSource roomyambience;
     private Coroutine fader;
 
@@ -21,7 +22,7 @@ public class ambiencefader : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (fader != null) StopCoroutine(fader);
-            fader = StartCoroutine(FadeBro(1f));
+            fader = StartCoroutine(FadeBro(targetVolume));
         }
     }
 

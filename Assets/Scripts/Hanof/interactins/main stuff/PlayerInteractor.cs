@@ -25,7 +25,7 @@ namespace InteractionSystem
         [SerializeField] private Transform handSocket;      //this is the empty hand place for the player
 
         [Header("Events")]
-        public UnityEvent<float> OnHoldProgressChanged; //this is for the progress for hold to interact, starts 0 goes to 1
+        public UnityEvent<float> OnHoldProgressChanged; //this is for the progress for hold to interact, starts 0 goes to 1. we can use it for UI
 
         public PickupItem CurrentItem { get; private set; }
         public Transform HandSocket => handSocket;
@@ -158,7 +158,7 @@ namespace InteractionSystem
             OnHoldProgressChanged?.Invoke(0f);
         }
 
-        // --- Carry API used by PickupItem / TrashBin ---
+        // --- carry here is used by PickupItem / TrashBin script :3 ---
 
         public void SetCarriedItem(PickupItem item) => CurrentItem = item;
 

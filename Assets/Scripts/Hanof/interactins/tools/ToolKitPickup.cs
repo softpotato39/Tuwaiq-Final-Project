@@ -10,6 +10,7 @@ namespace InteractionSystem
         [SerializeField] private GameObject promptIcon;    // the icon in the ui that pops up
         [SerializeField] private AudioSource pickupSound;   // the that plays once the thingie is destroyed
         [SerializeField] private ToolDefinition[] toolsToUnlock;    // in the inspector u assign the tools u want the player to get here
+        [SerializeField] private GameObject ctrlHint;       // i put this so we can display hints ! :3
         [SerializeField] private bool destroyOnPickup = true;
 
         public void ShowPrompt() => promptIcon?.SetActive(true);
@@ -31,6 +32,7 @@ namespace InteractionSystem
 
             if (destroyOnPickup)
                 promptIcon.SetActive(false);
+                ctrlHint.SetActive(true);
                 pickupSound.Play();
                 Destroy(gameObject);
 
