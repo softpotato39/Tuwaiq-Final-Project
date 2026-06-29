@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 1980152}
   - component: {fileID: 1980150}
   - component: {fileID: 1980153}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: floor 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,8 +206,8 @@ Transform:
   m_GameObject: {fileID: 1980145}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3867, y: 0, z: 11.7168}
-  m_LocalScale: {x: 2.9535, y: 1, z: 3.5107}
+  m_LocalPosition: {x: 4.3401, y: -0, z: 11.2218}
+  m_LocalScale: {x: 2.8513134, y: 1, z: 3.3730528}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -250,6 +250,8 @@ MonoBehaviour:
   trailColor: {r: 0.03616707, g: 0.034353837, b: 0.03773582, a: 1}
   stampRadius: 0.04
   decayRate: 0.992
+  footTexture: {fileID: 2800000, guid: 8aebfa892a6735a4bb6f8b89e929d131, type: 3}
+  footAspect: 0.45
   overlayRenderer: {fileID: 1691337467}
 --- !u!114 &1980153
 MonoBehaviour:
@@ -585,7 +587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5211720267947752103, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
       propertyPath: m_Enabled
@@ -609,10 +611,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 145898624}
+      addedObject: {fileID: 145898629}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 145898629}
+      addedObject: {fileID: 145898631}
   m_SourcePrefab: {fileID: 100100000, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
 --- !u!1 &145898621 stripped
 GameObject:
@@ -629,24 +631,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4741763956638393273, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
   m_PrefabInstance: {fileID: 145898620}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &145898624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145898621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1947e525033e09409edc5584ea79cc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FootprintSpawner
-  leftFootBone: {fileID: 145898623}
-  rightFootBone: {fileID: 145898622}
-  surfaceMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  surfaceSearchDistance: 5
 --- !u!95 &145898627 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
@@ -670,14 +654,43 @@ MonoBehaviour:
   turnIntervalRange: {x: 2.5, y: 5}
   maxRandomTurn: 90
   randomTurnSpeed: 90
+  enablePauses: 1
+  walkDurationRange: {x: 4, y: 8}
+  pauseDurationRange: {x: 1.5, y: 4}
+  floorOnly: 1
   stickDistance: 0.6
   wallCheckDistance: 0.5
   heightOffset: 0.05
   surfaceMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   animator: {fileID: 145898627}
   walkBoolParam: IsWalking
+--- !u!114 &145898631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145898621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fcf2884e2d54541bfe47d8bc38320c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootprintDecalSpawner
+  leftFootBone: {fileID: 145898623}
+  rightFootBone: {fileID: 145898622}
+  footprintPrefab: {fileID: 7740619412866276581, guid: 0007f63a1ae5c274da0a9b75d6aa1045, type: 3}
+  footScale: 0.3
+  surfaceOffset: 0.01
+  angleOffset: 0
+  swapLeftRight: 0
+  surfaceMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  surfaceSearchDistance: 1
+  flashlight: {fileID: 537877162}
+  debugLog: 1
 --- !u!1 &156211303
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,6 +900,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   surfaceSearchDistance: 1
+  angleOffset: 0
+  swapLeftRight: 0
 --- !u!114 &219902372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1504,6 +1519,8 @@ MonoBehaviour:
   trailColor: {r: 0.13500735, g: 0.12749197, b: 0.14150941, a: 1}
   stampRadius: 0.04
   decayRate: 0.992
+  footTexture: {fileID: 0}
+  footAspect: 0.45
   overlayRenderer: {fileID: 230305294}
 --- !u!64 &331120938
 MeshCollider:
@@ -2893,7 +2910,7 @@ GameObject:
   - component: {fileID: 1691337469}
   - component: {fileID: 1691337468}
   - component: {fileID: 1691337467}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: floor 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2966,8 +2983,8 @@ Transform:
   m_GameObject: {fileID: 1691337466}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3867, y: 0.06, z: 11.7168}
-  m_LocalScale: {x: 2.9535, y: 1, z: 3.5107}
+  m_LocalPosition: {x: 4.7633, y: 0.06, z: 11.1052}
+  m_LocalScale: {x: 2.8780828, y: 1, z: 3.3885276}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3030,6 +3047,8 @@ MonoBehaviour:
   trailColor: {r: 0.03616707, g: 0.034353837, b: 0.03773582, a: 1}
   stampRadius: 0.04
   decayRate: 0.992
+  footTexture: {fileID: 0}
+  footAspect: 0.45
   overlayRenderer: {fileID: 243738689}
 --- !u!23 &1892638193
 MeshRenderer:

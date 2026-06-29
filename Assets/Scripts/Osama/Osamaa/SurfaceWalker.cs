@@ -23,6 +23,19 @@ public class SurfaceWalker : MonoBehaviour
     public float maxRandomTurn = 90f;         // أقصى زاوية انعطاف عشوائي
     public float randomTurnSpeed = 90f;       // سرعة الانعطاف العشوائي (درجة/ثانية)
 
+    [Header("التوقّف (غموض)")]
+    [Tooltip("لو مفعّل، الوحش يوقف كل فترة فالأثر يخبو ويضيع على اللاعب.")]
+    public bool enablePauses = true;
+    [Tooltip("كم يمشي قبل ما يقف (ثواني).")]
+    public Vector2 walkDurationRange = new Vector2(4f, 8f);
+    [Tooltip("كم يبقى واقف (ثواني).")]
+    public Vector2 pauseDurationRange = new Vector2(1.5f, 4f);
+
+    [Header("نمط الحركة")]
+    [Tooltip("مفعّل = يتمشّى على الأرض فقط؛ لو صادف جدار أو حافة يلتف ويرجع (ما يتسلّق). " +
+             "مطفي = يتسلّق الجدران والسقف.")]
+    public bool floorOnly = true;
+
     [Header("كشف الأسطح")]
     public float stickDistance = 0.6f;        // مدى البحث عن السطح تحت القدم
     public float wallCheckDistance = 0.5f;    // مدى كشف الجدار الأمامي
@@ -37,16 +50,35 @@ public class SurfaceWalker : MonoBehaviour
     private float _randomTurnRemaining;
     private int _randomTurnDir = 1;
 
+    private bool _paused;
+    private float _stateTimer;
+
     private void Start()
     {
         if (animator == null) animator = GetComponentInChildren<Animator>();
+        _paused = false;
         SetWalking(true);
+        _stateTimer = Random.Range(walkDurationRange.x, walkDurationRange.y);
         PickNewRandomTurn();
         SnapToSurfaceImmediate();
     }
 
     private void Update()
     {
+        // 0) تبديل بين المشي والتوقّف (يخلي الأثر يضيع وقت الوقوف).
+        if (enablePauses)
+        {
+            _stateTimer -= Time.deltaTime;
+            if (_stateTimer <= 0f) TogglePause();
+        }
+
+        // وهو واقف: يحافظ على التصاقه بالسطح بس بدون حركة/انعطاف/تسلّق.
+        if (_paused)
+        {
+            StickToSurface();
+            return;
+        }
+
         // 1) انعطاف عشوائي حوالين محور "فوق" الحالي (يمين/يسار على نفس السطح)
         _turnTimer -= Time.deltaTime;
         if (_turnTimer <= 0f) PickNewRandomTurn();
@@ -58,25 +90,39 @@ public class SurfaceWalker : MonoBehaviour
             _randomTurnRemaining -= step;
         }
 
-        // 2) جدار أمامي؟ → يتسلقه (حافة داخلية)
+        // 2) جدار أمامي؟
         Vector3 wallOrigin = transform.position + transform.up * heightOffset;
-        if (Physics.Raycast(wallOrigin, transform.forward, wallCheckDistance, surfaceMask))
-        {
-            transform.Rotate(transform.right, -edgeTurnSpeed * Time.deltaTime, Space.World);
-        }
+        bool wallAhead = Physics.Raycast(wallOrigin, transform.forward, wallCheckDistance, surfaceMask);
 
-        // 3) ابحث عن السطح تحت القدم
-        Vector3 origin = transform.position + transform.up * heightOffset;
-        if (Physics.Raycast(origin, -transform.up, out RaycastHit hit, stickDistance + heightOffset + 0.3f, surfaceMask))
+        if (floorOnly)
         {
-            transform.position = hit.point + hit.normal * heightOffset;
-            Quaternion target = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, surfaceAlignSpeed * Time.deltaTime);
+            // أرض فقط: لو جدار قدّام أو ما فيه أرض قدّام (حافة) → التف حول محور "فوق" لتفاديه.
+            Vector3 aheadProbe = transform.position + transform.forward * 0.4f + transform.up * heightOffset;
+            bool floorAhead = Physics.Raycast(aheadProbe, -transform.up, stickDistance + heightOffset + 0.4f, surfaceMask);
+
+            if (wallAhead || !floorAhead)
+                transform.Rotate(transform.up, edgeTurnSpeed * Time.deltaTime, Space.World);
+
+            StickToSurface(); // يحاذي الأرض بدون تسلّق
         }
         else
         {
-            // ما فيه سطح تحت → حافة خارجية: يلف حولها للأسفل
-            transform.Rotate(transform.right, edgeTurnSpeed * Time.deltaTime, Space.World);
+            // النمط الكامل: يتسلّق الجدران والسقف ويلتف حول الحواف.
+            if (wallAhead)
+                transform.Rotate(transform.right, -edgeTurnSpeed * Time.deltaTime, Space.World);
+
+            Vector3 origin = transform.position + transform.up * heightOffset;
+            if (Physics.Raycast(origin, -transform.up, out RaycastHit hit, stickDistance + heightOffset + 0.3f, surfaceMask))
+            {
+                transform.position = hit.point + hit.normal * heightOffset;
+                Quaternion target = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+                transform.rotation = Quaternion.Slerp(transform.rotation, target, surfaceAlignSpeed * Time.deltaTime);
+            }
+            else
+            {
+                // ما فيه سطح تحت → حافة خارجية: يلف حولها للأسفل
+                transform.Rotate(transform.right, edgeTurnSpeed * Time.deltaTime, Space.World);
+            }
         }
 
         // 4) تحرّك للأمام على السطح
@@ -97,6 +143,28 @@ public class SurfaceWalker : MonoBehaviour
         _turnTimer = Random.Range(turnIntervalRange.x, turnIntervalRange.y);
         _randomTurnRemaining = Random.Range(0f, maxRandomTurn);
         _randomTurnDir = Random.value < 0.5f ? -1 : 1;
+    }
+
+    // يبدّل بين المشي والوقوف ويحدّث الأنميتر (وقت الوقوف ما يطلع Animation Events فالأثر يخبو).
+    private void TogglePause()
+    {
+        _paused = !_paused;
+        SetWalking(!_paused);
+        _stateTimer = _paused
+            ? Random.Range(pauseDurationRange.x, pauseDurationRange.y)
+            : Random.Range(walkDurationRange.x, walkDurationRange.y);
+    }
+
+    // محاذاة بسيطة مع السطح بدون حركة أمامية (تُستخدم وقت الوقوف عشان ما يطفو/يطيح).
+    private void StickToSurface()
+    {
+        Vector3 origin = transform.position + transform.up * heightOffset;
+        if (Physics.Raycast(origin, -transform.up, out RaycastHit hit, stickDistance + heightOffset + 0.3f, surfaceMask))
+        {
+            transform.position = hit.point + hit.normal * heightOffset;
+            Quaternion target = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, surfaceAlignSpeed * Time.deltaTime);
+        }
     }
 
     private void SetWalking(bool isWalking)
