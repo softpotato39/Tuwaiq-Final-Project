@@ -2,21 +2,27 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace InteractionSystem
+//////////////////////////////////////////////  
+//                                          //
+//       This script shall live on:         //
+//          Terminal Canvas UI              //
+//                                          //
+//////////////////////////////////////////////
+
+// script's purpose: reads a simple up and down input from the player and 
+//                   renders it on the canvas UI for the terminal !
+
+// script's requirements: just set up the canvas UI correctly and u'll be okay :)
+
+namespace InteractionSystem // <-- this is for unity so it groups classes together without losing track
+
 {
-    /// <summary>
-    /// OPTIONAL EXAMPLE - not required by the rest of the system. Shows the input-wiring
-    /// pattern for driving a vertical list of UI Buttons with the Terminal map's Navigate
-    /// (Vector2) and Confirm (Button) actions. Swap this out for your own terminal UI/menu
-    /// system once you've seen the pattern; it deliberately stays dumb and minimal.
-    /// </summary>
     public class TerminalMenuNavigator : MonoBehaviour
     {
-        [SerializeField] private InputActionReference navigateAction;
-        [SerializeField] private InputActionReference confirmAction;
+        [SerializeField] private InputActionReference navigateAction;   // assign me in inspector ! :)
+        [SerializeField] private InputActionReference confirmAction;    // assign me in inspector ! :3
         [SerializeField] private Button[] menuItems;
-        [Tooltip("Seconds between repeat moves while the stick stays tilted, so one tilt doesn't fly through the whole list.")]
-        [SerializeField] private float repeatDelay = 0.25f;
+        [SerializeField] private float repeatDelay = 0.25f;     // this makes it so when using joystick a single flick doesnt fly through the whole menu
 
         private int _selectedIndex;
         private float _repeatTimer;
@@ -43,7 +49,10 @@ namespace InteractionSystem
 
             if (Mathf.Abs(nav.y) > 0.5f && _repeatTimer <= 0f)
             {
-                int dir = nav.y > 0f ? -1 : 1; // up = previous item
+                // oh god its math 
+
+                int dir = nav.y > 0f ? -1 : 1; 
+                // ^ this is so when the player goes up it goes to the previous item
                 Highlight((_selectedIndex + dir + menuItems.Length) % menuItems.Length);
                 _repeatTimer = repeatDelay;
             }

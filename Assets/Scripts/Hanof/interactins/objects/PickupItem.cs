@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 //////////////////////////////////////////////  
 //                                          //
@@ -17,9 +18,13 @@ namespace InteractionSystem // <-- this is for unity so it groups classes togeth
 {
     public class PickupItem : MonoBehaviour, IInteractable
     {
-        [SerializeField] private string itemId = "TrashyTrash";             //item ID so the trash accepts this
+        [SerializeField] private string itemId = "TrashyTrash";             // item ID so the trash accepts this
         [SerializeField] private GameObject promptIcon;                     // assign the prompt u want in the inspector >:|
         [SerializeField] private bool disableCollidersWhileCarried = true;  // disable colliders so nothing gets messed up :)
+        [SerializeField] private float dropCollisionIgnoreTime = 0.5f;      // this stops the collision from immeditly activating, no bugs !
+
+        // this here will fix a very funny bug, dont worry about it lol
+        private Vector3 _originalScale;
 
         public string ItemId => itemId;
 
@@ -30,6 +35,7 @@ namespace InteractionSystem // <-- this is for unity so it groups classes togeth
         {
             _colliders = GetComponentsInChildren<Collider>();
             _rb = GetComponent<Rigidbody>();
+            _originalScale = transform.localScale;  // stores the size so it wont bug on drop
         }
         public void ShowPrompt() => promptIcon?.SetActive(true);
         public void HidePrompt() => promptIcon?.SetActive(false);
@@ -56,6 +62,35 @@ namespace InteractionSystem // <-- this is for unity so it groups classes togeth
             transform.localRotation = Quaternion.identity;
 
             interactor.SetCarriedItem(this);
+        }
+        public void Drop(Collider playerCollider)
+        {
+            if (_rb != null)
+            {
+                _rb.isKinematic = false;
+                _rb.useGravity = true;
+            }
+
+            if (disableCollidersWhileCarried)
+                foreach (var c in _colliders)
+                    c.enabled = true;
+
+            transform.localScale = _originalScale;  // reset object size 
+
+            if (playerCollider != null)
+                StartCoroutine(IgnorePlayerCollision(playerCollider));
+        }
+
+        private IEnumerator IgnorePlayerCollision(Collider playerCollider)
+        {
+            // this ienumerator is to stop collision from overlapping with player ! :)
+            foreach (var c in _colliders)
+                Physics.IgnoreCollision(c, playerCollider, true);
+
+            yield return new WaitForSeconds(dropCollisionIgnoreTime);
+
+            foreach (var c in _colliders)
+                Physics.IgnoreCollision(c, playerCollider, false);
         }
     }
 }

@@ -101,23 +101,53 @@ namespace InteractionSystem // <-- this is for unity so it groups classes togeth
             }
         }
 
+        //private void OnInteractPerformed(InputAction.CallbackContext ctx)
+        //{
+        //    if (_currentTarget == null || !_currentTarget.CanInteract(this))
+        //        return;
+
+        //    if (_currentHoldTarget != null)
+        //    {
+        //        _isHolding = true;
+        //        _holdTimer = 0f;
+        //    }
+        //    else
+        //    {
+        //        _currentTarget.Interact(this);
+
+        //        // safety check for hiding the prompt :)
+        //        if (!_currentTarget.CanInteract(this))
+        //            _currentTarget.HidePrompt();
+        //    }
+        //}
+
         private void OnInteractPerformed(InputAction.CallbackContext ctx)
         {
-            if (_currentTarget == null || !_currentTarget.CanInteract(this))
+            // looking at a interactable (trash) — takes priority
+            if (_currentTarget != null && _currentTarget.CanInteract(this))
+            {
+                if (_currentHoldTarget != null)
+                {
+                    _isHolding = true;
+                    _holdTimer = 0f;
+                }
+                else
+                {
+                    _currentTarget.Interact(this);
+
+                    if (!_currentTarget.CanInteract(this))
+                        _currentTarget.HidePrompt();
+                }
                 return;
-
-            if (_currentHoldTarget != null)
-            {
-                _isHolding = true;
-                _holdTimer = 0f;
             }
-            else
-            {
-                _currentTarget.Interact(this);
 
-                // safety check for hiding the prompt :)
-                if (!_currentTarget.CanInteract(this))
-                    _currentTarget.HidePrompt();
+            // nothing to interact with — drop carried item ifff holding one
+            if (IsCarryingItem)
+            {
+                PickupItem item = CurrentItem;
+                ClearCarriedItem();
+                item.transform.SetParent(null, true);
+                item.Drop(GetComponent<Collider>());
             }
         }
 
@@ -151,7 +181,6 @@ namespace InteractionSystem // <-- this is for unity so it groups classes togeth
                     _currentTarget.HidePrompt();
             }
         }
-
         private void CancelHold()
         {
             _currentHoldTarget?.OnHoldCancelled();

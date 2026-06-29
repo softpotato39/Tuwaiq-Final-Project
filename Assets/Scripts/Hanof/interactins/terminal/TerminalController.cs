@@ -2,25 +2,31 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace InteractionSystem
+//////////////////////////////////////////////  
+//                                          //
+//       This script shall live on:         //
+//            The Player ! :D               //
+//                                          //
+//////////////////////////////////////////////
+
+// script's purpose: It allows the player to transition from normal cam view
+//                   to the terminal cam view. Locking the walk and stuff and
+//                   making the player only interact with the terminal until 
+//                   they choose to exit
+
+// script's requirements: Input map Player/Terminal, PlayerControlLocker script on player.
+
+namespace InteractionSystem // <-- this is for unity so it groups classes together without losing track
 {
-    /// <summary>
-    /// One of these lives on the Player. It owns the transition into/out of "terminal mode":
-    /// powering on the screen, focusing the Cinemachine camera, swapping the active Input
-    /// Actions map from Player to Terminal (WASD/joystick = menu navigation, a Confirm
-    /// button, an Exit button), and locking the normal player controller via PlayerControlLocker.
-    /// </summary>
     public class TerminalController : MonoBehaviour
     {
         public static TerminalController Instance { get; private set; }
 
         [Header("Input")]
-        [Tooltip("The PlayerInput component on the player, used to switch the active action map.")]
-        [SerializeField] private PlayerInput playerInput;
-        [SerializeField] private string playerMapName = "Player";
-        [SerializeField] private string terminalMapName = "Terminal";
-        [Tooltip("The Exit/Cancel action living inside the Terminal map (Escape / gamepad East button).")]
-        [SerializeField] private InputActionReference terminalExitAction;
+        [SerializeField] private PlayerInput playerInput;                   // assign the input map u use here ! :)
+        [SerializeField] private string playerMapName = "Player";           // the name of the normal player input map
+        [SerializeField] private string terminalMapName = "Terminal";       // the name of the terminal input map
+        [SerializeField] private InputActionReference terminalExitAction;   // the button to press if u wanna exit
 
         [Header("Player Lock")]
         [SerializeField] private PlayerControlLocker controlLocker;

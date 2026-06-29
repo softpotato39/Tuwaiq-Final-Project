@@ -304,8 +304,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem.FlashlightTool
   beam: {fileID: 1946489125237565689}
-  audioSource: {fileID: 8141602392271007619}
-  toggleClip: {fileID: 8300000, guid: bb79c10d0146f6b4fa3f91421a1a0966, type: 3}
+  clickSound: {fileID: 0}
+  clickClip: {fileID: 8300000, guid: bb79c10d0146f6b4fa3f91421a1a0966, type: 3}
 --- !u!1 &8655643316095349408
 GameObject:
   m_ObjectHideFlags: 0

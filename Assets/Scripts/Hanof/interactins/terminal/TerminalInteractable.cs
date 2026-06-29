@@ -1,6 +1,19 @@
 using UnityEngine;
 
-namespace InteractionSystem
+//////////////////////////////////////////////
+//                                          //
+//       This script shall live on:         //
+//            The Terminal :O               //
+//                                          //
+//////////////////////////////////////////////
+
+// script's purpose: allows the player to turn on and off the screen for
+//                   the terminal once interacted with from the script:
+//                   TerminalInteractable.
+
+// script's requirements: Collider (any), Prompt, interact button, sounds on/off, screen on/of mesh and Cinemachine cam !
+
+namespace InteractionSystem // <-- this is for unity so it groups classes together without losing track
 {
     /// <summary>
     /// Put this on the terminal's collider along with a TerminalSession (same object or a
@@ -9,8 +22,7 @@ namespace InteractionSystem
     [RequireComponent(typeof(TerminalSession))]
     public class TerminalInteractable : MonoBehaviour, IInteractable
     {
-        [Tooltip("World-space icon/GameObject shown while this is the look-at target.")]
-        [SerializeField] private GameObject promptIcon;
+        [SerializeField] private GameObject promptIcon;     // UI prompt showing up to interact
 
         private TerminalSession _session;
 

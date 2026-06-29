@@ -320,28 +320,28 @@
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
-{
-    "name": "",
-    "id": "a1a1a1a1-0010-0001-0001-000000000001",
-    "path": "<Keyboard>/q",
-    "interactions": "",
-    "processors": "",
-    "groups": "",
-    "action": "UnequipTool",
-    "isComposite": false,
-    "isPartOfComposite": false
-},
-{
-    "name": "",
-    "id": "a1a1a1a1-0010-0001-0001-000000000002",
-    "path": "<Gamepad>/leftShoulder",
-    "interactions": "",
-    "processors": "",
-    "groups": "",
-    "action": "UnequipTool",
-    "isComposite": false,
-    "isPartOfComposite": false
-},
+		{
+    		    "name": "",
+    		    "id": "a1a1a1a1-0010-0001-0001-000000000001",
+    		    "path": "<Keyboard>/q",
+    		    "interactions": "",
+    		    "processors": "",
+    		    "groups": "",
+    		    "action": "UnequipTool",
+    		    "isComposite": false,
+    		    "isPartOfComposite": false
+		},
+		{
+    		    "name": "",
+    		    "id": "a1a1a1a1-0010-0001-0001-000000000002",
+    		    "path": "<Gamepad>/leftShoulder",
+    		    "interactions": "",
+    		    "processors": "",
+    		    "groups": "",
+    		    "action": "UnequipTool",
+    		    "isComposite": false,
+    		    "isPartOfComposite": false
+		},
                 {
                     "name": "",
                     "id": "afa35b62-5984-4ded-8f9c-5a0831dea19a",

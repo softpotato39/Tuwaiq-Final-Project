@@ -8,8 +8,8 @@ using UnityEngine;
 //////////////////////////////////////////////
 
 // script's purpose: the item in the game world the player unlocks the tool from, the player
-//                   raycast sees it and shows a prompt to pick it up, 
-//                   c
+//                   raycast sees it and shows a prompt to pick it up, and then it destroys
+//                   itself and unlocks the tool its linked to
 
 // script's requirements: Collider (any), Rigidbody, Prompt, interact button, sound, tool mesh, controls hint.
 

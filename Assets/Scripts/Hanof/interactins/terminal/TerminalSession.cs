@@ -1,40 +1,49 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
-namespace InteractionSystem
+//////////////////////////////////////////////
+//                                          //
+//       This script shall live on:         //
+//            The Terminal :O               //
+//                                          //
+//////////////////////////////////////////////
+
+// script's purpose: allows the player to turn on and off the screen for
+//                   the terminal once interacted with from the script:
+//                   TerminalInteractable.
+
+// script's requirements: Collider (any), Prompt, interact button, sounds on/off, screen on/of mesh and Cinemachine cam !
+
+namespace InteractionSystem // <-- this is for unity so it groups classes together without losing track
 {
-    /// <summary>
-    /// Drop this on (or near) each individual terminal. Holds everything specific to that
-    /// one terminal - its Cinemachine camera, screen visuals, and power-on sound - so
-    /// TerminalController itself stays generic and works with as many terminals as you place.
-    /// </summary>
     public class TerminalSession : MonoBehaviour
     {
         [Header("Camera")]
-        [Tooltip("Dedicated CinemachineCamera framing this terminal's screen. Keep its priority low/default until activated.")]
-        [SerializeField] private CinemachineCamera terminalCamera;
+        [SerializeField] private CinemachineCamera terminalCamera;      // assign the cam u want in the inspector :)
 
         [Header("Screen")]
-        [SerializeField] private GameObject screenOnVisual;
-        [SerializeField] private GameObject screenOffVisual;
+        [SerializeField] private GameObject screenOnVisual;             // what shows up once you turn ON the terminal
+        [SerializeField] private GameObject screenOffVisual;            // what shows up once you turn OFF the terminal
 
         [Header("Audio")]
-        [SerializeField] private AudioSource audioSource;
-        [SerializeField] private AudioClip powerOnClip;
-
+        [SerializeField] private AudioSource onAudioObj;               // sounds for on
+        [SerializeField] private AudioClip powerOnClip;                //
+        [SerializeField] private AudioSource offAudioObj;              // sounds for off
+        [SerializeField] private AudioClip powerOffClip;               //
         public CinemachineCamera Camera => terminalCamera;
 
         public void PowerOn()
         {
             if (screenOnVisual != null) screenOnVisual.SetActive(true);
             if (screenOffVisual != null) screenOffVisual.SetActive(false);
-            if (audioSource != null && powerOnClip != null) audioSource.PlayOneShot(powerOnClip);
+            if (onAudioObj != null && powerOnClip != null) onAudioObj.PlayOneShot(powerOnClip);
         }
 
         public void PowerOff()
         {
             if (screenOnVisual != null) screenOnVisual.SetActive(false);
             if (screenOffVisual != null) screenOffVisual.SetActive(true);
+            if (offAudioObj != null && powerOnClip != null) offAudioObj.PlayOneShot(powerOnClip);
         }
     }
 }
