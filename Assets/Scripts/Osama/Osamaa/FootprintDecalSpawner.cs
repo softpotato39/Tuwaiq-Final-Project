@@ -35,12 +35,8 @@ public class FootprintDecalSpawner : MonoBehaviour
     [Tooltip("لو مربوط: الخطوات تبان فقط داخل مخروط الفلاش. لو فاضي: تبان دايم.")]
     public PurpleFlashlight flashlight;
 
-    [Header("تشخيص")]
-    [Tooltip("يطبع رسائل في الـ Console تبيّن وش يصير عند كل خطوة.")]
-    public bool debugLog = true;
-
     // زر اختبار: كليك يمين على المكوّن في الـ Inspector → Test Spawn (Left)
-    // يطلع خطوة فوراً بدون الاعتماد على Animation Events — يعزل المشكلة.
+    // يطلع خطوة فوراً بدون الاعتماد على Animation Events.
     [ContextMenu("Test Spawn (Left)")]
     private void TestSpawnLeft() => SpawnFootprint("left");
     [ContextMenu("Test Spawn (Right)")]
@@ -49,32 +45,15 @@ public class FootprintDecalSpawner : MonoBehaviour
     /// <summary>تُستدعى من Animation Event بقيمة "left" أو "right".</summary>
     public void SpawnFootprint(string foot)
     {
-        if (debugLog) Debug.Log($"[Footprint] SpawnFootprint('{foot}') اتنادى", this);
-
         Transform bone = (foot == "left") ? leftFootBone : rightFootBone;
-        if (bone == null)
-        {
-            if (debugLog) Debug.LogWarning($"[Footprint] عظمة القدم '{foot}' مو مربوطة!", this);
-            return;
-        }
-        if (footprintPrefab == null)
-        {
-            if (debugLog) Debug.LogWarning("[Footprint] Footprint Prefab مو مربوط!", this);
-            return;
-        }
+        if (bone == null || footprintPrefab == null) return;
 
         Vector3 down = -transform.up;
         Vector3 origin = bone.position - down * 0.2f;
 
         if (!Physics.Raycast(origin, down, out RaycastHit hit,
                             surfaceSearchDistance, surfaceMask, QueryTriggerInteraction.Ignore))
-        {
-            if (debugLog) Debug.LogWarning($"[Footprint] الراي ما ضرب سطح. origin={origin}, مسافة={surfaceSearchDistance}. " +
-                                           "كبّر Surface Search Distance أو تأكد الأرض داخل Surface Mask.", this);
             return;
-        }
-
-        if (debugLog) Debug.Log($"[Footprint] الراي ضرب '{hit.collider.name}' عند {hit.point}", this);
 
         // اتجاه المشي مسقط على السطح.
         Vector3 fwd = Vector3.ProjectOnPlane(transform.forward, hit.normal).normalized;
@@ -117,7 +96,5 @@ public class FootprintDecalSpawner : MonoBehaviour
         // مرّر مرجع الفلاش للخطوة (لو فيه كشف بالفلاش).
         FootprintDecal decal = fp.GetComponent<FootprintDecal>();
         if (decal != null) decal.flashlight = flashlight;
-
-        if (debugLog) Debug.Log($"[Footprint] طلعت خطوة عند {pos} (scale={footScale})", fp);
     }
 }
