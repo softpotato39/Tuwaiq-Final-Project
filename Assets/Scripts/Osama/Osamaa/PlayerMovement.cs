@@ -167,4 +167,23 @@ public class PlayerMovement : MonoBehaviour
             cameraRoot.localPosition = rootPos;
         }
     }
+
+    // OSAMA HI THIS IS HANOF :)
+    // this code is to stop player from suddenly turning while walking into a portal
+    /// it basically updates the "internal movement vectors" when passing through a portal.
+    public void SyncPortalTeleport(Transform fromPortal, Transform toPortal, Quaternion newRotation)
+    {
+        // Rotate our internal finalVelocity vector so momentum transfers cleanly
+        // Transform direction out of old portal and into the new portal's local space
+        Vector3 localVelocity = fromPortal.InverseTransformDirection(finalVelocity);
+
+        // Flip it 180 degrees to account for exiting facing forward out of the receiver portal
+        localVelocity = Quaternion.Euler(0, 180, 0) * localVelocity;
+
+        // Convert back to world space relative to the exit portal
+        finalVelocity = toPortal.TransformDirection(localVelocity);
+
+        // Clear out single-frame inputs to prevent accidental double-jumps post-teleport
+        isJumpPressed = false;
+    }
 }
