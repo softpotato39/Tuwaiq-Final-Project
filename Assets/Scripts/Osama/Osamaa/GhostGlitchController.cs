@@ -2,24 +2,24 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// íÊÍßã ÈÔÏÉ ÊÃËíÑ ÇáÛáÇíÊÔ (_GlitchIntensity) İí ÔíÏÑ GhostGlitch ÚÈÑ MaterialPropertyBlock
-/// ÈÏæä ÅäÔÇÁ äÓÎ ÌÏíÏÉ ãä ÇáãÇÊíÑíÇá.
+/// Controls the intensity of the glitch effect (_GlitchIntensity) on the GhostGlitch shader
+/// via MaterialPropertyBlock, without creating new material instances.
 ///
-/// ØÑíŞÉ ÇáÇÓÊÎÏÇã:
-/// 1. Öíİå Úáì äİÓ ÇáÃæÈÌßÊ Çááí Úáíå ÇáÔíÏÑ = Custom/GhostGlitch.
-/// 2. ÇáŞíã ÊäØÈŞ Úáì ßá ÇáÜ Renderers ÊÍÊ åĞÇ ÇáÃæÈÌßÊ.
-/// 3. ÓßÑÈÊÇÊ ÃÎÑì (ãËá GhostBehavior) ÊŞÏÑ ÊÓÊÏÚí TriggerBurst() æŞÊ ÑÏ İÚá ãİÇÌÆ.
+/// Usage:
+/// 1. Attach this to the same object that has the Custom/GhostGlitch shader.
+/// 2. The values apply to all Renderers under this object.
+/// 3. Other scripts (e.g. GhostBehavior) can call TriggerBurst() for a sudden reaction.
 /// </summary>
 public class GhostGlitchController : MonoBehaviour
 {
-    [Header("ÔÏÉ ÇáÛáÇíÊÔ")]
-    [Tooltip("ÔÏÉ ÇáÛáÇíÊÔ æŞÊ ãÇ ÇáæÍÔ åÇÏÆ")]
+    [Header("Glitch Intensity")]
+    [Tooltip("Glitch intensity while the ghost is idle/calm")]
     [Range(0f, 1f)] public float idleIntensity = 0.15f;
 
-    [Tooltip("ÔÏÉ ÇáÛáÇíÊÔ æŞÊ ÑÏ İÚá ãİÇÌÆ (ÊíáíÈæÑÊ / İáÇÔ áÇíÊ)")]
+    [Tooltip("Glitch intensity during a sudden reaction (teleport / flashlight)")]
     [Range(0f, 1f)] public float burstIntensity = 1f;
 
-    [Tooltip("ßã ËÇäíÉ ÊÓÊãÑ ÔÏÉ ÇáÜ Burst ŞÈá ãÇ ÊÑÌÚ ááæÖÚ ÇáåÇÏÆ")]
+    [Tooltip("How many seconds the burst intensity lasts before returning to idle")]
     public float burstDuration = 0.6f;
 
     private static readonly int GlitchIntensityID = Shader.PropertyToID("_GlitchIntensity");
