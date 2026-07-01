@@ -2,13 +2,15 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// æÍÔ ÇáÎØæÇÊ: ÊÌæÇá Úáì ÇáÃÑÖ/ÇáÌÏÑÇä/ÇáÓŞİ + ÊíáíÈæÑÊ ŞÑíÈ ãä ÇááÇÚÈ + ÑÏ İÚá Úáì ÇáİáÇÔáÇíÊ.
-/// ãÊØáÈÇÊ ÅÚÏÇÏ:
-/// 1. Öíİå Úáì äİÓ ÇáÃæÈÌßÊ Çááí İíå Animator (ãËá Ch45_nonPBR).
-/// 2. ÇÓÍÈ "player" ÈÇáÜ Inspector.
-/// 3. (ÇÎÊíÇÑí) ÇÓÍÈ "flashlight" áæ ÊÈí ÑÏ İÚá ÚäÏ ÇáÅÖÇÁÉ Úáíå.
-/// 4. ÚÔÇä íãÔí Úáì ÇáÌÏÑÇä/ÇáÓŞİ: áÇ ÊÖíİ NavMeshAgent (Ãæ ÚØøáå)¡ æÊÃßÏ Åä ÇáÌÏÑÇä æÇáÓŞİ ÚäÏåã Collider.
-/// 5. ÇÓã ÇáÈæá ÈÇÑÇãÊÑ ÈÇáÃäãíÊÑ "walkBoolParam" íØÇÈŞ ÇáãæÌæÏ (ãËá Monster-Walking).
+/// Ghost behavior: wanders on floor/walls/ceiling + teleports near the player + reacts to flashlight.
+/// Setup requirements:
+/// 1. Attach this to the same object that has the Animator (e.g. Ch45_nonPBR).
+/// 2. Assign "player" in the Inspector.
+/// 3. (Optional) Assign "flashlight" if you want a reaction when it's lit up.
+/// 4. To walk on walls/ceiling: do NOT add a NavMeshAgent (or disable it), and make sure
+///    walls and ceiling have Colliders.
+/// 5. Make sure the walk bool parameter name "walkBoolParam" matches the Animator's
+///    parameter (e.g. Monster-Walking).
 /// </summary>
 [RequireComponent(typeof(GhostGlitchController))]
 public class GhostBehavior : MonoBehaviour
@@ -20,35 +22,35 @@ public class GhostBehavior : MonoBehaviour
         Teleporting
     }
 
-    [Header("ÇáãÑÇÌÚ")]
+    [Header("References")]
     public Transform player;
     public PurpleFlashlight flashlight;
     public Animator animator;
     public string walkBoolParam = "IsWalking";
 
-    [Header("ÅÚÏÇÏÇÊ ÇáÊÌæÇá")]
+    [Header("Wander Settings")]
     public float moveSpeed = 1.5f;
     public float wanderRadius = 12f;
     public float rotationSpeed = 4f;
-    [Tooltip("ãÏì ÇáÒãä Èíä äŞØÉ æÃÎÑì æŞÊ ãÇ íŞİ ÇáæÍÔ")]
+    [Tooltip("Range of time between wander points while the ghost pauses")]
     public Vector2 wanderWaitRange = new Vector2(2f, 6f);
 
-    [Header("ÇáãÔí Úáì ÇáÃÓØÍ (ÌÏÑÇä/ÓŞİ)")]
-    [Tooltip("áæ ãİÚøá¡ ÇáæÍÔ íáÊÕŞ ÈÃŞÑÈ ÓØÍ (ÃÑÖíÉ/ÌÏÇÑ/ÓŞİ) æíÊÍÑß Úáíå ÈÏá ãÇ íÈŞì ËÇÈÊ Úáì ÇáÃÑÖíÉ İŞØ")]
+    [Header("Surface Walking (Walls/Ceiling)")]
+    [Tooltip("If enabled, the ghost sticks to the nearest surface (floor/wall/ceiling) and moves along it instead of staying only on the floor")]
     public bool enableSurfaceWalking = true;
     public float surfaceCheckDistance = 1.5f;
     public LayerMask surfaceMask = ~0;
     public float surfaceRotateSpeed = 8f;
 
-    [Header("ÇáÊíáíÈæÑÊ ŞÑÈ ÇááÇÚÈ")]
+    [Header("Teleport Near Player")]
     public bool enableTeleport = true;
     public Vector2 teleportIntervalRange = new Vector2(10f, 25f);
     public float minDistanceFromPlayer = 6f;
     public float maxDistanceFromPlayer = 14f;
-    [Tooltip("áæ ÇáÒÇæíÉ ÃßÈÑ ãä åĞÇ íÚÊÈÑ ÈÚíÏ Úä äÙÑ ÇááÇÚÈ¡ íÕáÍ ááÊíáíÈæÑÊ")]
+    [Tooltip("If the angle is greater than this, it's considered outside the player's view and valid for teleporting")]
     public float avoidPlayerViewAngle = 50f;
 
-    [Header("ÑÏ ÇáİÚá ÚäÏ ÇáİáÇÔáÇíÊ")]
+    [Header("Flashlight Reaction")]
     public bool reactToFlashlight = true;
     [Range(0f, 1f)] public float lightReactionChance = 0.6f;
     public float lightDetectionDistance = 18f;
@@ -136,7 +138,7 @@ public class GhostBehavior : MonoBehaviour
         }
     }
 
-    // ---------------- ÇáÊÌæÇá ----------------
+    // ---------------- Wandering ----------------
 
     private void UpdateWandering()
     {
@@ -178,7 +180,7 @@ public class GhostBehavior : MonoBehaviour
         }
     }
 
-    // ---------------- ãäØŞ ÇáãÔí Úáì ÇáÃÓØÍ (ÌÏÇÑ/ÓŞİ/ÃÑÖíÉ) ----------------
+    // ---------------- Surface walking logic (wall/ceiling/floor) ----------------
 
     private void AlignToSurface()
     {
@@ -269,7 +271,7 @@ public class GhostBehavior : MonoBehaviour
         }
     }
 
-    // ---------------- ÇáÊÌãÏ (ÑÏ İÚá ÇáİáÇÔáÇíÊ) ----------------
+    // ---------------- Freeze (flashlight reaction) ----------------
 
     private void UpdateFrozen()
     {
@@ -301,7 +303,7 @@ public class GhostBehavior : MonoBehaviour
         }
     }
 
-    // ---------------- ÇáÊíáíÈæÑÊ ŞÑÈ ÇááÇÚÈ ----------------
+    // ---------------- Teleport near player ----------------
 
     private void ResetTeleportTimer()
     {
@@ -361,7 +363,7 @@ public class GhostBehavior : MonoBehaviour
         return player.position - player.forward * minDistanceFromPlayer;
     }
 
-    // ---------------- ÑÏ ÇáİÚá ÚäÏ ÇáİáÇÔáÇíÊ ----------------
+    // ---------------- Flashlight reaction ----------------
 
     private void CheckFlashlightReaction()
     {
