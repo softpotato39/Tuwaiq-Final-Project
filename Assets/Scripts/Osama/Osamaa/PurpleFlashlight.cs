@@ -1,37 +1,53 @@
 using UnityEngine;
 
-/// <summary>
-/// ÓßÑÈÊ ÇáİáÇÔ áÇíÊ ÇáÈäİÓÌí.
-/// íÖÇİ Úáì GameObject İíå Light Component ãä äæÚ Spot Light.
-///
-/// ØÑíŞÉ ÇáÅÚÏÇÏ:
-/// 1. ÃäÔÆ GameObject İÇÖí ÊÍÊ ÇáßÇãíÑÇ Ãæ ÇááÇÚÈ (Empty Child).
-/// 2. Öíİ Úáíå Component ãä äæÚ "Light" æÇÎÊÇÑ Type = Spot.
-/// 3. Öíİ Úáíå åĞÇ ÇáÓßÑÈÊ (PurpleFlashlight.cs).
-/// 4. æÌøå ÇáÜ Light ÈÍíË íØáÚ ááÃãÇã (äİÓ ÇÊÌÇå äÙÑ ÇááÇÚÈ).
-/// </summary>
+// =========================================================
+//  PurpleFlashlight
+//  Controls the purple light itself: color / intensity /
+//  range / spot angle, and turning it on/off.
+//
+//  It does NOT decide WHEN to toggle from gameplay.
+//  Toggling is requested by PurpleFlashlightTool.Use()
+//  (Hanof's tool system, the "Use" button), or by any
+//  other script that calls ToggleFlashlight() / SetFlashlight().
+//
+//  Where it lives:
+//  On the object that has the Light (Type = Spot) inside the
+//  flashlight TOOL prefab. That prefab is what ToolController
+//  spawns into the player's hand when the tool is equipped --
+//  you do NOT pick it up by hand.
+//
+//  Suggested prefab layout:
+//    PurpleFlashlight (root)   <- PurpleFlashlightTool.cs
+//      |- Mesh    (visual)
+//      |- Light   (Spot) + PurpleFlashlight.cs   <- THIS script
+//      |- Sound   (AudioSource)
+// =========================================================
+
 [RequireComponent(typeof(Light))]
 public class PurpleFlashlight : MonoBehaviour
 {
-    [Header("ÇáÅÚÏÇÏÇÊ ÇáÃÓÇÓíÉ")]
-    [Tooltip("áæä ÇáİáÇÔ áÇíÊ")]
-    public Color flashlightColor = new Color(0.55f, 0.2f, 0.85f); // ÈäİÓÌí
+    [Header("Light Settings")]
+    [Tooltip("Flashlight color")]
+    public Color flashlightColor = new Color(0.55f, 0.2f, 0.85f); // purple
 
-    [Tooltip("ÔÏÉ ÇáÖæÁ")]
+    [Tooltip("Light intensity")]
     public float intensity = 3.5f;
 
-    [Tooltip("äØÇŞ æÕæá ÇáÖæÁ")]
+    [Tooltip("Light range")]
     public float range = 12f;
 
-    [Tooltip("ÒÇæíÉ ÇäÊÔÇÑ ÇáÖæÁ (Spot Angle)")]
+    [Tooltip("Spot cone angle")]
     public float spotAngle = 45f;
 
-    [Header("ÇáÊÍßã")]
-    [Tooltip("ÇáÒÑ Çááí íæáøÚ/íØİøí ÇáİáÇÔ áÇíÊ")]
-    public KeyCode toggleKey = KeyCode.F;
-
-    [Tooltip("åá ÇáİáÇÔ áÇíÊ ãæáøÚ ãä ÇáÈÏÇíÉ¿")]
+    [Tooltip("Is the flashlight ON when the game starts?")]
     public bool startsOn = false;
+
+    [Header("Testing Only")]
+    [Tooltip("Toggle directly with a key for testing. Turn OFF once the tool system controls it, so it doesn't double-toggle.")]
+    public bool allowDirectKeyToggle = true;
+
+    [Tooltip("Key used only when 'Allow Direct Key Toggle' is on.")]
+    public KeyCode toggleKey = KeyCode.F;
 
     private Light _light;
     public bool IsOn { get; private set; }
@@ -39,7 +55,7 @@ public class PurpleFlashlight : MonoBehaviour
     private void Awake()
     {
         _light = GetComponent<Light>();
-        _light.type = LightType.Spot;
+        _light.type = LightType.Spot; // forced to Spot at runtime (edit mode may still show Point)
         ApplySettings();
     }
 
@@ -50,10 +66,9 @@ public class PurpleFlashlight : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(toggleKey))
-        {
+        // Test convenience only. Once wired through the tool, turn allowDirectKeyToggle OFF.
+        if (allowDirectKeyToggle && Input.GetKeyDown(toggleKey))
             ToggleFlashlight();
-        }
     }
 
     private void ApplySettings()
@@ -64,6 +79,7 @@ public class PurpleFlashlight : MonoBehaviour
         _light.spotAngle = spotAngle;
     }
 
+    // Called by PurpleFlashlightTool.Use() (the tool system's "Use" button).
     public void ToggleFlashlight()
     {
         SetFlashlight(!IsOn);
@@ -75,6 +91,6 @@ public class PurpleFlashlight : MonoBehaviour
         _light.enabled = turnOn;
     }
 
-    // íÓãÍ áÓßÑÈÊÇÊ ËÇäíÉ (ãËá RevealOnLight) ÊÌíÈ ãÚáæãÇÊ ÇáãÎÑæØ
+    // Lets other scripts (e.g. RevealOnLight) read the light cone.
     public Light GetLight() => _light;
 }
