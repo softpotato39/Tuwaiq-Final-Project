@@ -536,7 +536,6 @@ GameObject:
   - component: {fileID: 156211304}
   - component: {fileID: 156211306}
   - component: {fileID: 156211307}
-  - component: {fileID: 156211308}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -598,7 +597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: aa2119c64c1ffd742b7e81b3814106b2, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -644,25 +643,6 @@ MonoBehaviour:
   crouchCenter: {x: 0, y: 0.7, z: 0}
   cameraStandingY: 1.6
   cameraCrouchY: 0.5
---- !u!114 &156211308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156211303}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3abccc08649edab43b492955933dc25b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  interactDistance: 3
-  interactLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  handsHolder: {fileID: 1320388090}
-  itemLocalPosition: {x: 0.3, y: 1.6, z: 0.5}
-  itemLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &230305293
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,6 +35,7 @@ public class RevealUnderFlashlight : MonoBehaviour
     private Renderer _renderer;
     private MaterialPropertyBlock _mpb;
     private float _reveal;
+    private float _findTimer;
 
     private int _idAlpha, _idBaseColor, _idColor;
     private bool _hasAlpha, _hasBaseColor, _hasColor;
@@ -64,6 +65,17 @@ public class RevealUnderFlashlight : MonoBehaviour
 
     private void Update()
     {
+        // الفلاش قد يتسبِّن وقت اللعب (لما يلتقطه اللاعب) → ندوّر عليه لو ما لقيناه بعد.
+        if (flashlight == null)
+        {
+            _findTimer -= Time.deltaTime;
+            if (_findTimer <= 0f)
+            {
+                flashlight = FindFirstObjectByType<PurpleFlashlight>();
+                _findTimer = 0.3f;
+            }
+        }
+
         float target = (flashlight != null && flashlight.IsOn && InsideCone()) ? 1f : ambientReveal;
         _reveal = Mathf.MoveTowards(_reveal, target, revealFadeSpeed * Time.deltaTime);
         Apply(_reveal);
