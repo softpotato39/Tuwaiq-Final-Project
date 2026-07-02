@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem.ToolDefinition
   toolName: 
   icon: {fileID: 0}
-  toolPrefab: {fileID: 207694462677289467, guid: a1ccc2851fdf65a4f9e2064faa54396a, type: 3}
+  toolPrefab: {fileID: 1421084400095302409, guid: 787d7d495041d0a498eb9e7a9e817bff, type: 3}
