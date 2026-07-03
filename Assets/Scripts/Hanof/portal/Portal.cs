@@ -106,16 +106,15 @@ public class Portal : MonoBehaviour {
         screen.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
         linkedPortal.screen.material.SetInt ("displayMask", 0);
 
-        // Inside your Portal.cs -> Render() loop
         for (int i = startIndex; i < recursionLimit; i++)
         {
             portalCam.transform.SetPositionAndRotation(renderPositions[i], renderRotations[i]);
             SetNearClipPlane();
             HandleClipping();
 
-            // 1. Save original states
-            bool originalFogState = RenderSettings.fog;
-            RenderSettings.fog = false;
+            // 1. Save original states -> comment cuz gross no fog
+            //bool originalFogState = RenderSettings.fog;
+            //RenderSettings.fog = false;
 
             // 2. EXPLICITLY OVERRIDE THE CAMERA RENDERER DATA VIA THE PIPELINE
 #if UNITY_6_OR_NEWER || UNIVERSAL_RENDER_PIPELINE
@@ -134,7 +133,7 @@ public class Portal : MonoBehaviour {
             portalCam.Render();
 
             // 3. RESTORE EVERYTHING IMMEDIATELY
-            RenderSettings.fog = originalFogState;
+            //RenderSettings.fog = originalFogState;    // <---- made this a comment so it renders the fog :)
 #if UNITY_6_OR_NEWER || UNIVERSAL_RENDER_PIPELINE
             if (aeroComponent != null && aeroComponent is MonoBehaviour mbRestore) {
                 mbRestore.enabled = wasAeroActive;
