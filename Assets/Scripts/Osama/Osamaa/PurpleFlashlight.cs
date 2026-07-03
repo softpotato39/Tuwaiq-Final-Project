@@ -42,12 +42,12 @@ public class PurpleFlashlight : MonoBehaviour
     [Tooltip("Is the flashlight ON when the game starts?")]
     public bool startsOn = false;
 
-    [Header("Testing Only")]
-    [Tooltip("Toggle directly with a key for testing. Turn OFF once the tool system controls it, so it doesn't double-toggle.")]
-    public bool allowDirectKeyToggle = true;
+    [Header("Direct Toggle")]
+    [Tooltip("Toggle the flashlight directly with a mouse click. Turn OFF if the tool system's Use button already handles the same click, so it doesn't double-toggle.")]
+    public bool allowDirectMouseToggle = true;
 
-    [Tooltip("Key used only when 'Allow Direct Key Toggle' is on.")]
-    public KeyCode toggleKey = KeyCode.F;
+    [Tooltip("Mouse button used to toggle: 0 = Left, 1 = Right, 2 = Middle.")]
+    public int toggleMouseButton = 0;
 
     private Light _light;
     public bool IsOn { get; private set; }
@@ -66,8 +66,10 @@ public class PurpleFlashlight : MonoBehaviour
 
     private void Update()
     {
-        // Test convenience only. Once wired through the tool, turn allowDirectKeyToggle OFF.
-        if (allowDirectKeyToggle && Input.GetKeyDown(toggleKey))
+        // Left mouse click toggles the flashlight while it's held in the player's hand.
+        // If the tool system's "Use" button is ALSO on left-click, turn allowDirectMouseToggle
+        // OFF (or use a different button) so the flashlight doesn't toggle twice = stays off.
+        if (allowDirectMouseToggle && Input.GetMouseButtonDown(toggleMouseButton))
             ToggleFlashlight();
     }
 
