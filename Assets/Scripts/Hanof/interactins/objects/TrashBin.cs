@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 //////////////////////////////////////////////  
@@ -17,12 +18,12 @@ namespace InteractionSystem // <-- this is for unity so it groups classes togeth
 {
    public class TrashBin : MonoBehaviour, IInteractable
     {
-        [SerializeField] private GameObject promptIcon;         // assign the prompt u want in the inspector :)
-        [SerializeField] private string acceptedItemId = "";    //item ID so it only accepts certain objects
+        [SerializeField] private GameObject promptIcon;             // assign the prompt u want in the inspector :)
+        [SerializeField] private string acceptedItemId = "";        //item ID so it only accepts certain objects
 
         [Header("Feedback")]
-        [SerializeField] private Animator binAnimator;          // assign the animated door in the inspector
-        [SerializeField] private string disposeTrigger = "Dispose";
+        [SerializeField] private Animator binAnimator;              // assign the animated door in the inspector
+        [SerializeField] private string disposeTrigger = "Dispose"; // animator trigger call it Dispose :)) same spelling
         [SerializeField] private AudioSource audioSource;       
         [SerializeField] private AudioClip disposeClip;
 
@@ -36,19 +37,60 @@ namespace InteractionSystem // <-- this is for unity so it groups classes togeth
             return interactor.CurrentItem.ItemId == acceptedItemId;
         }
 
+        //public void Interact(PlayerInteractor interactor)
+        //{
+        //    if (!CanInteract(interactor)) return;
+
+        //    if (binAnimator != null && !string.IsNullOrEmpty(disposeTrigger))
+        //        binAnimator.SetTrigger(disposeTrigger);
+
+        //    if (audioSource != null && disposeClip != null)
+        //        audioSource.PlayOneShot(disposeClip);
+
+        //    StartCoroutine(DisposeTime(5f));
+
+        //    PickupItem item = interactor.CurrentItem;
+        //    interactor.ClearCarriedItem();
+        //    Destroy(item.gameObject);
+
+        //}
+        //private IEnumerator DisposeTime(float delay)
+        //{
+        //    yield return new WaitForSeconds(5f);
+        //}
+
         public void Interact(PlayerInteractor interactor)
         {
             if (!CanInteract(interactor)) return;
 
             PickupItem item = interactor.CurrentItem;
             interactor.ClearCarriedItem();
-            Destroy(item.gameObject);
-
-            if (binAnimator != null && !string.IsNullOrEmpty(disposeTrigger))
-                binAnimator.SetTrigger(disposeTrigger);
 
             if (audioSource != null && disposeClip != null)
                 audioSource.PlayOneShot(disposeClip);
+
+            if (binAnimator != null && !string.IsNullOrEmpty(disposeTrigger))
+            {
+                binAnimator.SetTrigger(disposeTrigger);
+                StartCoroutine(DestroyAfterAnimation(item));
+            }
+            else
+            {
+                Destroy(item.gameObject);
+            }
         }
+
+        private IEnumerator DestroyAfterAnimation(PickupItem item)
+        {
+            // this lets the animation finish before destroying the object :)
+            yield return null;
+
+            float animationLength = binAnimator.GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(animationLength);
+
+            if (item != null)
+                Destroy(item.gameObject);
+        }
+
     }
 }
