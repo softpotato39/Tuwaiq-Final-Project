@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem.ToolDefinition
   toolName: Purple Flashlight
   icon: {fileID: 0}
-  toolPrefab: {fileID: 2570585342647832726, guid: 4cf6a46a17ba06449981aa1896d9ebe8, type: 3}
+  toolPrefab: {fileID: 5260357975460572978, guid: 69f8a87a412c4d04a962924a5cfa43d6, type: 3}

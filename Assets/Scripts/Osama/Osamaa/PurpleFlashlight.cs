@@ -17,15 +17,22 @@ using UnityEngine;
 //  you do NOT pick it up by hand.
 //
 //  Suggested prefab layout:
-//    PurpleFlashlight (root)   <- PurpleFlashlightTool.cs
+//    PurpleFlashlight (root) + PurpleFlashlight.cs + PurpleFlashlightTool.cs
 //      |- Mesh    (visual)
-//      |- Light   (Spot) + PurpleFlashlight.cs   <- THIS script
+//      |- Light   (Spot)      <- assign it to "Target Light" below
 //      |- Sound   (AudioSource)
+//
+//  The Light can be on THIS object or on any child. Assign it to
+//  "Target Light"; if left empty the script auto-finds a Light on
+//  itself or in the children.
 // =========================================================
 
-[RequireComponent(typeof(Light))]
 public class PurpleFlashlight : MonoBehaviour
 {
+    [Header("Light Reference")]
+    [Tooltip("The Spot Light the flashlight controls. Can be a child. If empty, auto-finds one on this object or in children.")]
+    public Light targetLight;
+
     [Header("Light Settings")]
     [Tooltip("Flashlight color")]
     public Color flashlightColor = new Color(0.55f, 0.2f, 0.85f); // purple
@@ -54,7 +61,17 @@ public class PurpleFlashlight : MonoBehaviour
 
     private void Awake()
     {
-        _light = GetComponent<Light>();
+        // اربط الضوء من الحقل، أو دوّره على نفس الأوبجكت، أو في الأبناء (Lightpu مثلاً).
+        _light = targetLight != null ? targetLight : GetComponent<Light>();
+        if (_light == null) _light = GetComponentInChildren<Light>(true);
+
+        if (_light == null)
+        {
+            Debug.LogWarning("[PurpleFlashlight] ما فيه Light مربوط (لا حقل، لا على الأوبجكت، لا في الأبناء).", this);
+            enabled = false;
+            return;
+        }
+
         _light.type = LightType.Spot; // forced to Spot at runtime (edit mode may still show Point)
         ApplySettings();
     }
@@ -90,7 +107,7 @@ public class PurpleFlashlight : MonoBehaviour
     public void SetFlashlight(bool turnOn)
     {
         IsOn = turnOn;
-        _light.enabled = turnOn;
+        if (_light != null) _light.enabled = turnOn;
     }
 
     // Lets other scripts (e.g. RevealOnLight) read the light cone.
