@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7370011538009619865
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000004172325
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.98
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6595463
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.75166404
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -97.469
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3388996257878338913, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_Name
+      value: Ch455
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_Name
+      value: Monster-Tracking
+      objectReference: {fileID: 0}
+    - target: {fileID: 5211720267947752103, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7d5cf7ee28a540a4e9b05156c3384ede, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7444098860174013440}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2639106370915044817}
+  m_SourcePrefab: {fileID: 100100000, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+--- !u!4 &2848996531556146720 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4741763956638393273, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+  m_PrefabInstance: {fileID: 7370011538009619865}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3975869075159465992 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+  m_PrefabInstance: {fileID: 7370011538009619865}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7323086134155964115 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 281297371296666442, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+  m_PrefabInstance: {fileID: 7370011538009619865}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7676072907434016968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4eb2a384661d99b419f52d4428255fc1, type: 3}
+  m_PrefabInstance: {fileID: 7370011538009619865}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7444098860174013440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7676072907434016968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a51f3601450ba469534a1e5bda9603, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SurfaceWalker
+  moveSpeed: 2
+  surfaceAlignSpeed: 12
+  edgeTurnSpeed: 220
+  turnIntervalRange: {x: 2.5, y: 5}
+  maxRandomTurn: 90
+  randomTurnSpeed: 90
+  enablePauses: 1
+  walkDurationRange: {x: 4, y: 8}
+  pauseDurationRange: {x: 1.5, y: 4}
+  floorOnly: 1
+  stickDistance: 0.6
+  wallCheckDistance: 0.5
+  heightOffset: 0.05
+  surfaceMask:
+    serializedVersion: 2
+    m_Bits: 128
+  animator: {fileID: 3975869075159465992}
+  walkBoolParam: IsWalking
+--- !u!114 &2639106370915044817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7676072907434016968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fcf2884e2d54541bfe47d8bc38320c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootprintDecalSpawner
+  leftFootBone: {fileID: 2848996531556146720}
+  rightFootBone: {fileID: 7323086134155964115}
+  footprintPrefab: {fileID: 7740619412866276581, guid: 0007f63a1ae5c274da0a9b75d6aa1045, type: 3}
+  footScale: 0.3
+  surfaceOffset: 0.01
+  angleOffset: 0
+  swapLeftRight: 0
+  surfaceMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  surfaceSearchDistance: 1
+  flashlight: {fileID: 0}

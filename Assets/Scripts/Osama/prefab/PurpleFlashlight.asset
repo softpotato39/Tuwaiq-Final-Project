@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68dcab31bdfb0f943a76e389da56f9bd, type: 3}
+  m_Name: PurpleFlashlight
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem.ToolDefinition
+  toolName: Purple Flashlight
+  icon: {fileID: 0}
+  toolPrefab: {fileID: 2570585342647832726, guid: 4cf6a46a17ba06449981aa1896d9ebe8, type: 3}
