@@ -18,4 +18,9 @@ public class SanitySystem : MonoBehaviour
 
         brainImage.fillAmount = sanity / 100f;
     }
+    public void AddSanity(float amount)
+{
+    sanity += amount;
+    sanity = Mathf.Clamp(sanity, 0f, 100f);
+}
 }
