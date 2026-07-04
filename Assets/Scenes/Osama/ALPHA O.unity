@@ -3243,6 +3243,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 995223726}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &197210952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595709116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2705a9206528f144cbc15648402b64e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AmbientHorror
+  clips:
+  - {fileID: 8300000, guid: 3e01b4932f5c2224d8156ce343e86079, type: 3}
+  - {fileID: 8300000, guid: 5d7579fe56a198b418cce5861289fdd9, type: 3}
+  - {fileID: 8300000, guid: 81b42a802f179514b9ff6ac60a7158c7, type: 3}
+  - {fileID: 8300000, guid: 91f906dfa1b7048498af8a9f8a57508e, type: 3}
+  - {fileID: 8300000, guid: b36e10fd9298b1943b661ba4bfd8c96c, type: 3}
+  intervalRange: {x: 8, y: 22}
+  volumeRange: {x: 1.27, y: 2.26}
+  player: {fileID: 8848602605845649310}
+  positionAroundPlayer: 1
+  minDistance: 3
+  maxDistance: 9
 --- !u!1 &201291096
 GameObject:
   m_ObjectHideFlags: 0
@@ -10040,7 +10064,7 @@ GameObject:
   - component: {fileID: 524571169}
   - component: {fileID: 524571173}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Run
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10133,13 +10157,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524571168}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0023151587, y: -0.69731075, z: 0.7167601, w: 0.0027266238}
-  m_LocalPosition: {x: -278.8691, y: 8.228, z: 139.373}
+  m_LocalRotation: {x: 0.49439234, y: -0.4917559, z: 0.5018397, w: 0.51177084}
+  m_LocalPosition: {x: -282.384, y: 9.787, z: 134.385}
   m_LocalScale: {x: 0.39175728, y: 1, z: 0.27159235}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 88.372, y: -14.516, z: 165.451}
+  m_LocalEulerAnglesHint: {x: 88.372, y: -14.516, z: 74.764}
 --- !u!114 &524571173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14430,6 +14454,8 @@ GameObject:
   - component: {fileID: 685017043}
   - component: {fileID: 685017045}
   - component: {fileID: 685017044}
+  - component: {fileID: 685017046}
+  - component: {fileID: 685017047}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -14546,6 +14572,122 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &685017046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685017042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff92db9efdd5e80469bd30a4f1b0f1e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlickerLight
+  targetLight: {fileID: 685017045}
+  flickerSpeed: 14
+  flickerAmount: 0.5
+  enableBlackouts: 1
+  blackoutIntervalRange: {x: 6, y: 16}
+  blackoutDurationRange: {x: 0.08, y: 0.45}
+  buzz: {fileID: 685017047}
+--- !u!82 &685017047
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685017042}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 09ff6599ac9397c4a9b23ecaf8ad7d2d, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &685184699
 GameObject:
   m_ObjectHideFlags: 0
@@ -23149,6 +23291,8 @@ GameObject:
   - component: {fileID: 1200034702}
   - component: {fileID: 1200034704}
   - component: {fileID: 1200034703}
+  - component: {fileID: 1200034705}
+  - component: {fileID: 1200034706}
   m_Layer: 0
   m_Name: Spot Light (1)
   m_TagString: Untagged
@@ -23265,6 +23409,122 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &1200034705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200034701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff92db9efdd5e80469bd30a4f1b0f1e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlickerLight
+  targetLight: {fileID: 1200034704}
+  flickerSpeed: 14
+  flickerAmount: 0.5
+  enableBlackouts: 1
+  blackoutIntervalRange: {x: 6, y: 16}
+  blackoutDurationRange: {x: 0.08, y: 0.45}
+  buzz: {fileID: 1200034706}
+--- !u!82 &1200034706
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200034701}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 09ff6599ac9397c4a9b23ecaf8ad7d2d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1209868100
 GameObject:
   m_ObjectHideFlags: 0
@@ -31170,6 +31430,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8037830791164574495, guid: 7cc430f3511caa44b9fb4c5fc709073e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1219757963}
+    - targetCorrespondingSourceObject: {fileID: 8037830791164574495, guid: 7cc430f3511caa44b9fb4c5fc709073e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 197210952}
     - targetCorrespondingSourceObject: {fileID: 8425435503881603155, guid: 7cc430f3511caa44b9fb4c5fc709073e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1651901830}
