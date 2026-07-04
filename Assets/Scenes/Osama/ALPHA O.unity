@@ -9989,6 +9989,7 @@ GameObject:
   - component: {fileID: 524571171}
   - component: {fileID: 524571170}
   - component: {fileID: 524571169}
+  - component: {fileID: 524571173}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -10090,6 +10091,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 88.372, y: -14.516, z: 165.451}
+--- !u!114 &524571173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524571168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44495fc897e9c24da66b113ffdbfb11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RevealUnderFlashlight
+  flashlight: {fileID: 0}
+  ambientReveal: 0
+  revealFadeSpeed: 6
+  overrideHalfAngle: 0
+  requireLineOfSight: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1001 &531294058
 PrefabInstance:
   m_ObjectHideFlags: 0
