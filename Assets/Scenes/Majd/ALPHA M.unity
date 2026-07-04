@@ -17483,7 +17483,7 @@ GameObject:
   - component: {fileID: 889827609}
   - component: {fileID: 889827608}
   - component: {fileID: 889827611}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ACTIVATOR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
