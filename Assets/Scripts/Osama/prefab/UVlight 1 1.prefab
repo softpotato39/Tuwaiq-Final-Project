@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5913734501323107005}
   - component: {fileID: 184959023816639317}
   - component: {fileID: 5522590901376660481}
-  - component: {fileID: 4475842256322907372}
   - component: {fileID: 288198904088245026}
   - component: {fileID: 218662916502867042}
   m_Layer: 6
@@ -115,24 +114,6 @@ MonoBehaviour:
   startsOn: 0
   allowDirectMouseToggle: 0
   toggleMouseButton: 0
---- !u!114 &4475842256322907372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5260357975460572978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b06eac5558994e04382c6fedcfd54a69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem.ToolKitPickup
-  promptIcon: {fileID: 0}
-  pickupSound: {fileID: 0}
-  toolsToUnlock:
-  - {fileID: 11400000, guid: 4038f19ef4a8e924bb2d4f267d619ce1, type: 2}
-  ctrlHint: {fileID: 0}
-  destroyOnPickup: 1
 --- !u!65 &288198904088245026
 BoxCollider:
   m_ObjectHideFlags: 0

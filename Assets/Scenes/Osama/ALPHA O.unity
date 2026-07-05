@@ -25869,6 +25869,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3035940099571445833, guid: f75692cdfa14b464f8e757468f4dea1b, type: 3}
+      propertyPath: ctrlHint
+      value: 
+      objectReference: {fileID: 2062271132}
+    - target: {fileID: 3035940099571445833, guid: f75692cdfa14b464f8e757468f4dea1b, type: 3}
+      propertyPath: promptIcon
+      value: 
+      objectReference: {fileID: 563911248}
     - target: {fileID: 3792163498184568545, guid: f75692cdfa14b464f8e757468f4dea1b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -255.33167

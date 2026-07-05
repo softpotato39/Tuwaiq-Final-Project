@@ -5296,6 +5296,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 5368532108633512947, guid: aa2119c64c1ffd742b7e81b3814106b2, type: 3}
         Gain: 20
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -5307,6 +5309,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 5368532108633512947, guid: aa2119c64c1ffd742b7e81b3814106b2, type: 3}
         Gain: -20
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -21121,6 +21125,14 @@ PrefabInstance:
     - target: {fileID: -3187299424064105263, guid: ae3e2949f086dd34592281ff0e15fedf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2271502847731017999, guid: ae3e2949f086dd34592281ff0e15fedf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.79
+      objectReference: {fileID: 0}
+    - target: {fileID: -2271502847731017999, guid: ae3e2949f086dd34592281ff0e15fedf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.39
       objectReference: {fileID: 0}
     - target: {fileID: -2181680288713638572, guid: ae3e2949f086dd34592281ff0e15fedf, type: 3}
       propertyPath: m_IsActive

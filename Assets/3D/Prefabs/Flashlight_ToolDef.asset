@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem.ToolDefinition
   toolName: Flashy
   icon: {fileID: 0}
-  toolPrefab: {fileID: 8013777704304991351, guid: 8d57791032c8fc346b2b68c1a8dbbdcb, type: 3}
+  toolPrefab: {fileID: 958883089787686795, guid: 8d57791032c8fc346b2b68c1a8dbbdcb, type: 3}
