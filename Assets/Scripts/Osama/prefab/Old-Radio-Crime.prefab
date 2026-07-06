@@ -88,10 +88,10 @@ PrefabInstance:
       addedObject: {fileID: 326804881459001660}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7c458d763103e684ba4498ff2fccd79e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9051382103513926464}
+      addedObject: {fileID: 5969838778873610243}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7c458d763103e684ba4498ff2fccd79e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5969838778873610243}
+      addedObject: {fileID: 6005391474647960282}
   m_SourcePrefab: {fileID: 100100000, guid: 7c458d763103e684ba4498ff2fccd79e, type: 3}
 --- !u!1 &5221702449661840614 stripped
 GameObject:
@@ -146,23 +146,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &9051382103513926464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5221702449661840614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b06eac5558994e04382c6fedcfd54a69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem.ToolKitPickup
-  promptIcon: {fileID: 0}
-  pickupSound: {fileID: 5969838778873610243}
-  toolsToUnlock: []
-  ctrlHint: {fileID: 0}
-  destroyOnPickup: 1
 --- !u!82 &5969838778873610243
 AudioSource:
   m_ObjectHideFlags: 0
@@ -175,7 +158,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: c7abf624391096843b43e8a2d98b9c21, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -260,3 +243,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6005391474647960282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5221702449661840614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b04f56af8574148b376f6866e44392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrimeVisionTool
+  range: 6
+  activateSound: {fileID: 5969838778873610243}
