@@ -48,6 +48,13 @@ public class FootprintDecalSpawner : MonoBehaviour
         Transform bone = (foot == "left") ? leftFootBone : rightFootBone;
         if (bone == null || footprintPrefab == null) return;
 
+        // The flashlight is spawned at runtime when the player equips the tool,
+        // so it can't be assigned in the Inspector -> leave the field empty and
+        // auto-find it here. (An Inspector-assigned PREFAB would be a dead
+        // reference whose IsOn is always false = footprints never reveal.)
+        if (flashlight == null)
+            flashlight = FindFirstObjectByType<PurpleFlashlight>();
+
         Vector3 down = -transform.up;
         Vector3 origin = bone.position - down * 0.2f;
 
