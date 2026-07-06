@@ -35,6 +35,8 @@ public class FootstepSounds : MonoBehaviour
     [Header("الخطو")]
     [Tooltip("كم متر يمشي اللاعب بين خطوة وخطوة (أصغر = خطوات أسرع).")]
     public float stepDistance = 2.2f;
+    [Tooltip("أقل وقت بين خطوة وخطوة (ثواني) — يمنع الأصوات تتلاحق بسرعة. كبّره لو تبي مساحة أكثر.")]
+    public float minTimeBetweenSteps = 0.35f;
     [Tooltip("أقل سرعة عشان يعتبره ماشي (يمنع الصوت وهو واقف).")]
     public float minSpeed = 0.3f;
 
@@ -47,6 +49,7 @@ public class FootstepSounds : MonoBehaviour
 
     private Vector3 _lastPos;
     private float _accumulated;
+    private float _lastStepTime;
 
     private void Start()
     {
@@ -76,9 +79,11 @@ public class FootstepSounds : MonoBehaviour
         }
 
         _accumulated += dist;
-        if (_accumulated >= stepDistance)
+        // خطوة جديدة: لازم مشى مسافة كافية + عدّى الوقت الأدنى من آخر خطوة.
+        if (_accumulated >= stepDistance && Time.time - _lastStepTime >= minTimeBetweenSteps)
         {
             _accumulated = 0f;
+            _lastStepTime = Time.time;
             PlayStep();
         }
     }
