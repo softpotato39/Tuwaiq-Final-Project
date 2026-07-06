@@ -14699,6 +14699,8 @@ GameObject:
   - component: {fileID: 685184700}
   - component: {fileID: 685184702}
   - component: {fileID: 685184701}
+  - component: {fileID: 685184704}
+  - component: {fileID: 685184703}
   m_Layer: 0
   m_Name: Spot Light (5)
   m_TagString: Untagged
@@ -14815,6 +14817,122 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!82 &685184703
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685184699}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 09ff6599ac9397c4a9b23ecaf8ad7d2d, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &685184704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685184699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff92db9efdd5e80469bd30a4f1b0f1e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlickerLight
+  targetLight: {fileID: 685184702}
+  flickerSpeed: 14
+  flickerAmount: 0.5
+  enableBlackouts: 1
+  blackoutIntervalRange: {x: 6, y: 16}
+  blackoutDurationRange: {x: 0.08, y: 0.45}
+  buzz: {fileID: 685184703}
 --- !u!1 &688856314
 GameObject:
   m_ObjectHideFlags: 0
@@ -16611,12 +16729,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrimeSceneReplay
   characters: []
+  glitchOnReveal: []
   killer: {fileID: 776455851}
   killerShootState: Shoot
   victim: {fileID: 1352512600}
   victimReactionState: Victim Reaction
-  holdVictimUntilShot: 1
-  glitchOnReveal: []
+  victimAppearTime: 1.2
+  victimGlitch: {fileID: 0}
+  victimFallsOnShot: 1
   gunAudio: {fileID: 776455853}
   gunClip: {fileID: 8300000, guid: c45a9c741117ef3499581950fbbfbd51, type: 3}
   muzzleFlash: {fileID: 0}
@@ -26085,12 +26205,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrimeSceneReplay
   characters: []
+  glitchOnReveal: []
   killer: {fileID: 776455851}
   killerShootState: Shoot
   victim: {fileID: 1352512600}
   victimReactionState: Victim Reaction
-  holdVictimUntilShot: 1
-  glitchOnReveal: []
+  victimAppearTime: 1.2
+  victimGlitch: {fileID: 0}
+  victimFallsOnShot: 1
   gunAudio: {fileID: 0}
   gunClip: {fileID: 0}
   muzzleFlash: {fileID: 0}
