@@ -36680,7 +36680,7 @@ MonoBehaviour:
   killerShootState: Shoot
   victim: {fileID: 1352512600}
   victimReactionState: Victim Reaction
-  victimAppearTime: 1.2
+  victimAppearTime: 1.5
   victimGlitch: {fileID: 0}
   victimFallsOnShot: 1
   gunAudio: {fileID: 1876658050}
@@ -75291,6 +75291,7 @@ GameObject:
   - component: {fileID: 3087294641179125414}
   - component: {fileID: 180649225587726041}
   - component: {fileID: 6300427892790155310}
+  - component: {fileID: 8848602605845649311}
   m_Layer: 3
   m_Name: ----- Player -----
   m_TagString: Player
@@ -108646,6 +108647,7 @@ GameObject:
   - component: {fileID: 2219043075249879840}
   - component: {fileID: 7181012074087794459}
   - component: {fileID: 7242195363432374726}
+  - component: {fileID: 7242195363432374727}
   m_Layer: 0
   m_Name: Plane.021
   m_TagString: Untagged
@@ -108675,6 +108677,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -150120879314253014, guid: 7cb156005073d024884e10be0f376c04, type: 3}
+--- !u!114 &7242195363432374727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7242195363432374725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eaea7c9cba237240be012dee9f280df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SurfaceTag
+  surface: Metal
 --- !u!1 &7244254551675653415
 GameObject:
   m_ObjectHideFlags: 0
@@ -124701,6 +124716,42 @@ Transform:
   - {fileID: 892678862}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &8848602605845649311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624522710424743952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7704ea08684421f44958efc507d0819d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootstepSounds
+  audioSource: {fileID: 0}
+  surfaces: []
+  defaultSurface:
+    surface: Metal
+    clips:
+    - {fileID: 8300000, guid: 71936f4430e78ef44b5ae1fa7c001850, type: 3}
+    - {fileID: 8300000, guid: 27fd1c98c701fcf41baed80b29d70eb2, type: 3}
+    - {fileID: 8300000, guid: 0080f3a0195fc5742872c56255b29f47, type: 3}
+    - {fileID: 8300000, guid: 0130d52da93126d48b22da2a3c0d4455, type: 3}
+    - {fileID: 8300000, guid: 38feebc71a96a1b4ca12c19ccf262f78, type: 3}
+    - {fileID: 8300000, guid: 759553ac4d3c64b4c8a0fdf13571388e, type: 3}
+    - {fileID: 8300000, guid: 48f5abca1d3368c4aba19f7ef05da093, type: 3}
+    - {fileID: 8300000, guid: 40a6cceb97a4e6f45956ed0e6517fab6, type: 3}
+    - {fileID: 8300000, guid: da26cf2d1553af44cb6effec7e257484, type: 3}
+    - {fileID: 8300000, guid: 40ffcabb4adc4b34cbcf8e2a8ddd7cba, type: 3}
+  volumeRange: {x: 0.7, y: 1}
+  pitchRange: {x: 0.92, y: 1.08}
+  stepDistance: 2.2
+  minSpeed: 0.52
+  rayDistance: 1.5
+  rayStartHeight: 0.3
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &8853093561505596115
 GameObject:
   m_ObjectHideFlags: 0
