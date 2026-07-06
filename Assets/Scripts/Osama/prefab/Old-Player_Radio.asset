@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68dcab31bdfb0f943a76e389da56f9bd, type: 3}
+  m_Name: Old-Player_Radio
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem.ToolDefinition
+  toolName: Crime Vision
+  icon: {fileID: 0}
+  toolPrefab: {fileID: 5221702449661840614, guid: cf4c52e7b9817b847ace2b0c7b43b847, type: 3}
