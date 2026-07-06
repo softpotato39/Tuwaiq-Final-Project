@@ -2,37 +2,40 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// إعادة تمثيل الجريمة: تشغّل المشهد → الأشباح (القاتل + الضحية) تظهر بجلتش،
-/// القاتل يطلق، الطلقة تتزامن مع الصوت + وميض الكاتم + سقوط الضحية.
+/// إعادة تمثيل الجريمة (رؤية بالأداة / زر G للتجربة):
+///  - عند التشغيل: القاتل (وأي أشباح ثابتة) يظهرون فوراً بجلتش، والقاتل يبدأ حركة الطلق.
+///  - بعد Victim Appear Time: الضحية **تتجسّد** (تظهر من العدم) بجلتش وتقف واقفة.
+///  - عند Time To Shot: صوت الطلقة + الوميض، والضحية تسقط.
+///  - بعد Scene Duration: الكل يختفي.
 ///
-/// الأشباح مخفية عادةً (renderers مطفية). عند التشغيل تظهر مع burst جلتش
-/// من GhostGlitchController، ثم تشتغل أنميشنات القاتل/الضحية.
-///
-/// كل شخصية عندها أنميشن واحد بس، فالأنيميتور بسيط (Entry يوصل مباشرة
-/// للحالة، بدون Idle ولا Parameters). السكربت ينادي Animator.Play(stateName)
-/// مباشرة لإعادة تشغيل الحركة من البداية — بدون الحاجة لـ Trigger/Transition.
-/// خلّ "Loop Time" مطفي على الكليبات عشان تتوقف على آخر فريم (وضعية الإطلاق/الموت).
-///
-/// جرّبها بزر الاختبار (G) أول. بعدها اربط Play() بأداة (IUsableTool) أو Trigger.
+/// كل شخصية عندها أنميشن واحد بس (Entry → الحالة مباشرة، بدون Parameters).
+/// السكربت ينادي Animator.Play(stateName) لإعادة تشغيل الحركة من البداية.
+/// خلّ Loop Time مطفي على الكليبات + Culling Mode = Always Animate.
 /// مستقل تماماً — آمن للميرج.
 /// </summary>
 public class CrimeSceneReplay : MonoBehaviour
 {
-    [Header("الشخصيات (تنخفي/تنكشف)")]
-    [Tooltip("أوبجكتات القاتل والضحية — تنطفي renderers-هم حتى يجي المشهد.")]
+    [Header("يظهرون فوراً (عند G)")]
+    [Tooltip("أوبجكتات تظهر فوراً عند التشغيل (القاتل + أي أشباح ثابتة). لا تحط الضحية هنا.")]
     public GameObject[] characters;
-
-    [Header("أنميشن")]
-    public Animator killer;
-    [Tooltip("اسم حالة الأنيميتور حق القاتل (مثل 'Shoot') — نفس اسم العقدة في نافذة Animator.")]
-    public string killerShootState = "Shoot";
-    public Animator victim;
-    [Tooltip("اسم حالة الأنيميتور حق الضحية (مثل 'Victim Reaction').")]
-    public string victimReactionState = "Victim Reaction";
-
-    [Header("ظهور بجلتش (اختياري)")]
-    [Tooltip("GhostGlitchController على الأشباح — يعمل burst لحظة الظهور.")]
+    [Tooltip("GhostGlitchController على هؤلاء — burst لحظة ظهورهم (اختياري).")]
     public GhostGlitchController[] glitchOnReveal;
+
+    [Header("القاتل")]
+    public Animator killer;
+    [Tooltip("اسم حالة أنيميتر القاتل (نفس اسم العقدة في نافذة Animator).")]
+    public string killerShootState = "Shoot";
+
+    [Header("الضحية (تتجسّد متأخرة)")]
+    public Animator victim;
+    [Tooltip("اسم حالة أنيميتر الضحية (مثل 'Victim Reaction').")]
+    public string victimReactionState = "Victim Reaction";
+    [Tooltip("بعد كم ثانية من التشغيل تظهر الضحية (مختفية تماماً قبلها).")]
+    public float victimAppearTime = 1.2f;
+    [Tooltip("GhostGlitchController حق الضحية — burst لحظة ظهورها (اختياري).")]
+    public GhostGlitchController victimGlitch;
+    [Tooltip("تظهر الضحية واقفة وتسقط وقت الطلقة. لو مطفي: تسقط أول ما تظهر.")]
+    public bool victimFallsOnShot = true;
 
     [Header("الطلقة")]
     public AudioSource gunAudio;
@@ -40,13 +43,12 @@ public class CrimeSceneReplay : MonoBehaviour
     [Tooltip("وميض الكاتم (اختياري) — يشتغل لحظة الطلق.")]
     public GameObject muzzleFlash;
     public float muzzleFlashTime = 0.07f;
-    [Tooltip("الوقت من بداية المشهد إلى لحظة الطلق (زامنه مع أنميشن القاتل).")]
-    public float timeToShot = 1.2f;
+    [Tooltip("وقت صوت الطلقة + الوميض + سقوط الضحية (من بداية المشهد).")]
+    public float timeToShot = 1.6f;
 
     [Header("التوقيت")]
-    [Tooltip("مدة المشهد الكاملة قبل ما يختفي.")]
+    [Tooltip("مدة المشهد الكاملة قبل ما يختفي الكل.")]
     public float sceneDuration = 4.5f;
-    [Tooltip("يختفي الأشباح بعد نهاية المشهد.")]
     public bool hideAfter = true;
     public bool startHidden = true;
     public bool oneShot = false;
@@ -61,7 +63,12 @@ public class CrimeSceneReplay : MonoBehaviour
     private void Start()
     {
         if (muzzleFlash != null) muzzleFlash.SetActive(false);
-        if (startHidden) SetHidden(true);
+        if (startHidden)
+        {
+            SetHidden(characters, true);
+            SetKillerHidden(true);
+            SetVictimHidden(true);
+        }
     }
 
     private void Update()
@@ -82,29 +89,45 @@ public class CrimeSceneReplay : MonoBehaviour
     {
         _playing = true;
 
-        // 1) كشف الأشباح + burst جلتش (يظهرون كأنهم يتشكّلون).
-        SetHidden(false);
+        // 1) القاتل (والأشباح الثابتة) يظهرون فوراً بجلتش، والقاتل يبدأ الطلق.
+        SetHidden(characters, false);
+        SetKillerHidden(false);
         if (glitchOnReveal != null)
             foreach (var gc in glitchOnReveal)
                 if (gc != null) gc.TriggerBurst();
-
-        // 2) القاتل يبدأ حركة التصويب/الطلق (يعيد تشغيلها من الفريم 0 دايماً).
         if (killer != null && !string.IsNullOrEmpty(killerShootState))
             killer.Play(killerShootState, 0, 0f);
 
-        // 3) استنى للحظة الطلق.
-        yield return new WaitForSeconds(timeToShot);
+        // 2) استنى لين تتجسّد الضحية.
+        yield return new WaitForSeconds(victimAppearTime);
 
-        // 4) الطلقة: صوت + وميض + الضحية تسقط.
-        if (gunAudio != null && gunClip != null) gunAudio.PlayOneShot(gunClip);
+        // 3) الضحية تظهر من العدم بجلتش، وتقف واقفة (فريم 0).
+        SetVictimHidden(false);
+        if (victimGlitch != null) victimGlitch.TriggerBurst();
         if (victim != null && !string.IsNullOrEmpty(victimReactionState))
+        {
             victim.Play(victimReactionState, 0, 0f);
+            victim.speed = victimFallsOnShot ? 0f : 1f; // 0 = واقفة تنتظر الطلقة
+        }
+
+        // 4) استنى لحظة الطلقة → صوت + وميض + الضحية تسقط.
+        yield return new WaitForSeconds(Mathf.Max(0f, timeToShot - victimAppearTime));
+        if (gunAudio != null && gunClip != null) gunAudio.PlayOneShot(gunClip);
         if (muzzleFlash != null) StartCoroutine(FlashRoutine());
+        if (victim != null && victimFallsOnShot && !string.IsNullOrEmpty(victimReactionState))
+        {
+            victim.speed = 1f;
+            victim.Play(victimReactionState, 0, 0f);
+        }
 
-        // 5) استنى نهاية المشهد.
+        // 5) استنى نهاية المشهد ثم اخفِ الكل.
         yield return new WaitForSeconds(Mathf.Max(0f, sceneDuration - timeToShot));
-
-        if (hideAfter) SetHidden(true);
+        if (hideAfter)
+        {
+            SetHidden(characters, true);
+            SetKillerHidden(true);
+            SetVictimHidden(true);
+        }
         _playing = false;
     }
 
@@ -115,14 +138,26 @@ public class CrimeSceneReplay : MonoBehaviour
         muzzleFlash.SetActive(false);
     }
 
-    private void SetHidden(bool hidden)
+    private void SetHidden(GameObject[] arr, bool hidden)
     {
-        if (characters == null) return;
-        foreach (GameObject c in characters)
-        {
-            if (c == null) continue;
-            foreach (Renderer r in c.GetComponentsInChildren<Renderer>(true))
-                r.enabled = !hidden;
-        }
+        if (arr == null) return;
+        foreach (GameObject c in arr) SetRenderers(c, !hidden);
+    }
+
+    private void SetKillerHidden(bool hidden)
+    {
+        if (killer != null) SetRenderers(killer.gameObject, !hidden);
+    }
+
+    private void SetVictimHidden(bool hidden)
+    {
+        if (victim != null) SetRenderers(victim.gameObject, !hidden);
+    }
+
+    private void SetRenderers(GameObject go, bool enabled)
+    {
+        if (go == null) return;
+        foreach (Renderer r in go.GetComponentsInChildren<Renderer>(true))
+            r.enabled = enabled;
     }
 }
