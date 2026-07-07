@@ -69,6 +69,7 @@ public class GhostBehavior : MonoBehaviour
     private float _teleportTimer;
     private float _reactionCooldownTimer;
     private float _freezeTimer;
+    private float _flashlightFindTimer;
 
     private Vector3 _currentNormal = Vector3.up;
 
@@ -98,6 +99,18 @@ public class GhostBehavior : MonoBehaviour
 
     private void Update()
     {
+        // The flashlight is spawned at runtime when the player equips the tool,
+        // so it isn't assignable in the Inspector. Auto-find it (keep retrying).
+        if (flashlight == null && reactToFlashlight)
+        {
+            _flashlightFindTimer -= Time.deltaTime;
+            if (_flashlightFindTimer <= 0f)
+            {
+                flashlight = FindFirstObjectByType<PurpleFlashlight>();
+                _flashlightFindTimer = 0.3f;
+            }
+        }
+
         if (_reactionCooldownTimer > 0f)
         {
             _reactionCooldownTimer -= Time.deltaTime;

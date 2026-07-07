@@ -111,7 +111,7 @@ MonoBehaviour:
   intensity: 3.5
   range: 12
   spotAngle: 45
-  startsOn: 0
+  startsOn: 1
   allowDirectMouseToggle: 0
   toggleMouseButton: 0
 --- !u!65 &288198904088245026
