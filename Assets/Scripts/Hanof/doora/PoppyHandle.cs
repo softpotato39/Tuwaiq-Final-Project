@@ -21,6 +21,8 @@ public class PoppyHandle : MonoBehaviour, IInteractable
     [SerializeField] private Texture callPromptTexture;         // the CALL DOOR texture !
     [SerializeField] private Texture sendAwayPromptTexture;     // the SEND AWAY texture !
 
+    [SerializeField] private Animator handleAnimator;
+
     void OnEnable() => FactoryTrack.Instance.OnStateChanged += HandleStateChanged;
     void OnDisable() => FactoryTrack.Instance.OnStateChanged -= HandleStateChanged;
 
@@ -45,6 +47,8 @@ public class PoppyHandle : MonoBehaviour, IInteractable
 
     public void Interact(PlayerInteractor interactor)
     {
+        handleAnimator.SetTrigger("Pull");
+
         var state = FactoryTrack.Instance.State;
         if (state == LineState.Idle) FactoryTrack.Instance.CallDoor();
         else if (state == LineState.RoomActive) FactoryTrack.Instance.SendDoorAway();

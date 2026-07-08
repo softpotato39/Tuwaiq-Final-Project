@@ -12,8 +12,8 @@ public class FactoryTrack : MonoBehaviour
     [SerializeField] private List<DoorEntry> allDoors;
     [SerializeField] private int maxFails = 3;
 
-    [SerializeField] private PlayableDirector winDirector;       // global, on its own GameObject
-    [SerializeField] private PlayableDirector gameOverDirector;  // global, on its own GameObject
+    [SerializeField] private PlayableDirector winDirector;       
+    [SerializeField] private PlayableDirector gameOverDirector; 
     [SerializeField] private string winSceneName;
     [SerializeField] private string gameOverSceneName;
 
