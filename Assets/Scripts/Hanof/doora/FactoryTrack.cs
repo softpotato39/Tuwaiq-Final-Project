@@ -45,14 +45,15 @@ public class FactoryTrack : MonoBehaviour
         currentDoor = remainingDoors[index];
         remainingDoors.RemoveAt(index);
 
+        currentDoor.RoomRoot.SetActive(true);
+        currentDoor.RoomClearChecker.Initialize();
+
         SetState(LineState.DoorArriving);
         PlayDoorTimeline(currentDoor.ArrivalAndOpenTimeline, OnArrivalAndOpenComplete);
     }
 
     void OnArrivalAndOpenComplete()
     {
-        currentDoor.RoomRoot.SetActive(true);
-        currentDoor.RoomClearChecker.Initialize();
         SetState(LineState.RoomActive);
     }
 
