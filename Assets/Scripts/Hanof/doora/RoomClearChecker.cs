@@ -14,10 +14,9 @@ using UnityEngine;
 // script's requirements: big box collider covering the room
 public class RoomClearChecker : MonoBehaviour
 {
-    [Tooltip("A collider sized to the room's interior. Does NOT need isTrigger — only .bounds is read.")]
     [SerializeField] private Collider roomBounds;
 
-    [SerializeField] private string mustRemoveTag = "MustRemove";
+    [SerializeField] private string mustRemoveTag = "anomalies";
 
     private List<Transform> tracked = new List<Transform>();
     public void Initialize()
