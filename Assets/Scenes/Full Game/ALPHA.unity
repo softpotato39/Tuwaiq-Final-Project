@@ -583,8 +583,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1926719319}
+        m_TargetAssemblyTypeName: PauseSettings, Assembly-CSharp
         m_MethodName: CloseControls
         m_Mode: 1
         m_Arguments:
@@ -11669,7 +11669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 276.6, y: -68.64}
+  m_AnchoredPosition: {x: 356, y: -952}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &363412123
@@ -11716,8 +11716,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1926719319}
+        m_TargetAssemblyTypeName: PauseSettings, Assembly-CSharp
         m_MethodName: CloseAudio
         m_Mode: 1
         m_Arguments:
@@ -14740,7 +14740,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &433230313
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23343,8 +23343,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1926719319}
+        m_TargetAssemblyTypeName: PauseSettings, Assembly-CSharp
         m_MethodName: CloseAccessibility
         m_Mode: 1
         m_Arguments:
@@ -39842,7 +39842,7 @@ RectTransform:
   m_GameObject: {fileID: 1195726846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.82, y: 0.84, z: 0.25669}
+  m_LocalScale: {x: 0.43729782, y: 0.4479636, z: 0.13689022}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1131917977}
@@ -39854,7 +39854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 12.000244, y: 1}
+  m_AnchoredPosition: {x: 385, y: 1}
   m_SizeDelta: {x: 1820, y: 980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1195726848
@@ -51888,8 +51888,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1926719319}
+        m_TargetAssemblyTypeName: PauseSettings, Assembly-CSharp
         m_MethodName: OpenAudio
         m_Mode: 1
         m_Arguments:
@@ -52158,8 +52158,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1926719319}
+        m_TargetAssemblyTypeName: PauseSettings, Assembly-CSharp
         m_MethodName: OpenControls
         m_Mode: 1
         m_Arguments:
@@ -52813,7 +52813,7 @@ RectTransform:
   m_GameObject: {fileID: 1620570995}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.79999995, z: 0.314665}
+  m_LocalScale: {x: 0.39802, y: 0.45487997, z: 0.17891851}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 112225228}
@@ -52827,7 +52827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.40795898, y: 1}
+  m_AnchoredPosition: {x: 362, y: 1}
   m_SizeDelta: {x: 1820, y: 980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1620570997
@@ -55536,8 +55536,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1926719319}
+        m_TargetAssemblyTypeName: PauseSettings, Assembly-CSharp
         m_MethodName: OpenDisplay
         m_Mode: 1
         m_Arguments:
@@ -59773,8 +59773,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1926719319}
+        m_TargetAssemblyTypeName: PauseSettings, Assembly-CSharp
         m_MethodName: OpenAccessibility
         m_Mode: 1
         m_Arguments:
@@ -61955,7 +61955,7 @@ RectTransform:
   m_GameObject: {fileID: 1881172112}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.84, y: 0.84, z: 0.452375}
+  m_LocalScale: {x: 0.43076435, y: 0.43076435, z: 0.23198456}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 22128000}
@@ -61963,7 +61963,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00024414062, y: 0}
+  m_AnchoredPosition: {x: 378, y: 0}
   m_SizeDelta: {x: 1820, y: 980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1881172114
@@ -67570,8 +67570,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1926719319}
+        m_TargetAssemblyTypeName: PauseSettings, Assembly-CSharp
         m_MethodName: CloseDisplay
         m_Mode: 1
         m_Arguments:
@@ -68948,8 +68948,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076479074}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.82, z: 0.31945}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0000014833}
+  m_LocalScale: {x: 0.42781898, y: 0.50115937, z: 0.19523825}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1313012619}
@@ -68960,7 +68960,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.2302246, y: 0}
+  m_AnchoredPosition: {x: 299, y: 0}
   m_SizeDelta: {x: 1820, y: 980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2076479076
