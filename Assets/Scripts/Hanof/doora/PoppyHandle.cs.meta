@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5429feaa24c331e45b4d833522befa95
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - promptImage: {instanceID: 0}
+  - callPromptTexture: {instanceID: 0}
+  - sendAwayPromptTexture: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
