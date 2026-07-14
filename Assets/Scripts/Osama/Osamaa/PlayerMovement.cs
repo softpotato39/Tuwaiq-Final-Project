@@ -70,24 +70,24 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void OnCrouch(InputValue value)
-    {
-        if (value.isPressed)
-        {
-            isCrouching = !isCrouching;
+    //public void OnCrouch(InputValue value)
+    //{
+    //    if (value.isPressed)
+    //    {
+    //        isCrouching = !isCrouching;
 
-            if (isCrouching)
-            {
-                characterController.height = crouchHeight;
-                characterController.center = crouchCenter;
-            }
-            else
-            {
-                characterController.height = standingHeight;
-                characterController.center = standingCenter;
-            }
-        }
-    }
+    //        if (isCrouching)
+    //        {
+    //            characterController.height = crouchHeight;
+    //            characterController.center = crouchCenter;
+    //        }
+    //        else
+    //        {
+    //            characterController.height = standingHeight;
+    //            characterController.center = standingCenter;
+    //        }
+    //    }
+    //}
 
     private void HandleStamina()
     {
